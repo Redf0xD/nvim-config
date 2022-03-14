@@ -1,0 +1,138 @@
+{
+  // Pretier
+  "prettier.arrowParens": "avoid",
+  "prettier.bracketSpacing": false,
+  "prettier.disableSuccessMessage": true,
+  // Emmet
+  "emmet.includeLanguages": { "javascript": "javascriptreact","vue-html": "html" },
+
+  // Javascript and TypeScript
+  "typescript.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+
+  // Eslint
+   "eslint.packageManager": "yarn",
+   "eslint.nodePath": "/usr/bin/node",
+   "eslint.autoFixOnSave": true,
+
+  // Css
+  "css.validate": true,
+  "less.validate": false,
+  "scss.validate": false,
+  "wxss.validate": false,
+
+  // Lua
+  "Lua.diagnostics.globals": ["vim"],
+
+  // Emoji
+  "coc.source.emoji.filetypes": ["markdown", "javascript","html"],
+
+  // Deno
+  // "deno.enable": true,
+  // "deno.lint": true,
+  // "deno.unstable": true,
+  // "prettier.disableLanguages": ["javascript", "typescript", "json"],
+  // "tsserver.enable": false,
+
+  // Tabnine
+  // "tabnine.shortcut": "TabNine",
+  // "tabnine.priority": 1,
+
+  // Diagnostic Sever
+  // "diagnostic-languageserver.formatFiletypes": {
+    // "lua": "lua-format",
+    // "sh": "shfmt",
+    // "zsh": "shfmt"
+  // },
+
+  // "diagnostic-languageserver.filetypes": {
+    // "vim": "vint"
+  // },
+
+  // Snippets
+  "snippets.priority": 1,
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  },
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/ultisnips",
+
+  // Yank
+  // "yank.limit": 50,
+  // "yank.list.maxsize": 100,
+
+  // Completion Icons
+  "suggest.completionItemKindLabels": {
+    "method": "  ",
+    "function": "  ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": "  ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": " ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  ",
+    "default": "  "
+  },
+
+  "suggest.highPrioritySourceLimit": 10,
+  "suggest.languageSourcePriority": 95,
+  "suggest.lowPrioritySourceLimit": 90,
+
+  "coc.source.file.priority": 60,
+  "coc.source.buffer.priority": 50,
+  // "yank.priority": 10,
+  "suggest.triggerCompletionWait": 30,
+
+  "suggest.autoTrigger": "always",
+  "suggest.localityBonus": true,
+  "suggest.fixInsertedWord": true,
+  "suggest.enablePreselect": true,
+  "suggest.removeDuplicateItems": true,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "suggest.defaultSortMethod": "alphabetical",
+  // "suggest.numberSelect": false,
+  "suggest.triggerAfterInsertEnter": false,
+  "suggest.detailField": "menu",
+  "suggest.keepCompleteopt": false,
+  "suggest.noselect": false,
+
+  // Linting Icons
+  "diagnostic.errorSign": " ",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": " ",
+
+  // CoC
+  // "coc.preferences.colorSupport": true,
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": ["css","markdown","html","javascript","javascriptreact"],
+
+  // "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
+
+  "languageserver": {
+    "ocaml-lsp": {
+      "command": "opam",
+      "args": ["config", "exec", "--", "ocamllsp"],
+      "filetypes": ["ocaml", "reason"]
+    }
+  }
+}
+
