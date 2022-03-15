@@ -1,4 +1,3 @@
-vim.g.nvim_tree_side = "right"
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
@@ -37,7 +36,7 @@ vim.g.nvim_tree_icons = {
 require('nvim-tree').setup({
   disable_netrw = true,
   hijack_netrw = true,
-  auto_close = true,
+  auto_close = false,
   open_on_setup = false,
   open_on_tab = false,
   update_cwd = true,
@@ -87,6 +86,16 @@ require('nvim-tree').setup({
   trash = {
     cmd = "trash",
     require_confirm = true,
+  },
+  actions = {
+    change_dir = {
+      enable = true,
+      global = false,
+    },
+    open_file = {
+      quit_on_open = true,
+      rezise_window = true,
+    }
   }
 })
 vim.cmd('highlight NvimTreeFolderIcon guibg=blue')

@@ -81,12 +81,13 @@ return require('packer').startup(function()
   use('christoomey/vim-tmux-navigator')
 
   use('lukas-reineke/indent-blankline.nvim')
-
-  use({'phaazon/hop.nvim',
-	config = function()
-	  require('hop').setup({ keys = 'etovxqpdygfblzhckisuran' })
-    end,})
-
+ use({
+      'phaazon/hop.nvim',
+        branch = 'v1',
+       config = function()
+    require'hop'.setup({ keys = 'etovxqpdygfblzhckisuran' })
+  end,
+  })
 use({
     'pwntester/octo.nvim',
     opt = true,

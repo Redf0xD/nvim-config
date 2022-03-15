@@ -1,4 +1,5 @@
 set clipboard+=unnamedplus
+
 nnoremap <C-j> 10<C-e>
 nnoremap <C-k> 10<C-y>
 map <Leader>h :tabprevious<cr>
