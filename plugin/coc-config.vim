@@ -1,5 +1,5 @@
 set clipboard+=unnamedplus
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css','coc-emmet','coc-emoji','coc-html','coc-tsserver','coc-prettier','coc-syntax','coc-tslint-plugin','coc-terminal','coc-sumneko-lua','coc-stylua','coc-markdown-preview-enhanced','coc-lua','coc-import-cost']
+let g:coc_global_extensions = ['coc-marketplace']
 nnoremap <C-j> 10<C-e>
 nnoremap <C-k> 10<C-y>
 map <Leader>h :tabprevious<cr>
