@@ -1,6 +1,5 @@
 function Dap()
   -- Load Plugins
-
   vim.cmd([[packadd dap]])
   vim.cmd([[packadd teledap]])
   vim.cmd([[packadd dapy]])
