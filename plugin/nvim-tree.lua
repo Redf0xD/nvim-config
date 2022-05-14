@@ -1,4 +1,3 @@
-vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_root_folder_modifier = ':~'
@@ -36,7 +35,6 @@ vim.g.nvim_tree_icons = {
 require('nvim-tree').setup({
   disable_netrw = true,
   hijack_netrw = true,
-  auto_close = false,
   open_on_setup = false,
   open_on_tab = false,
   update_cwd = true,
@@ -93,8 +91,12 @@ require('nvim-tree').setup({
     },
     open_file = {
       quit_on_open = true,
-      rezise_window = true,
     }
+  },
+  renderer = {
+    indent_markers = {
+      enable = true,
+    },
   }
 })
 vim.cmd('highlight NvimTreeFolderIcon guibg=blue')
