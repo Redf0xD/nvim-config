@@ -1,19 +1,35 @@
 {
   // Pretier
-  "prettier.arrowParens": "avoid",
-  "prettier.bracketSpacing": false,
-  "prettier.disableSuccessMessage": true,
+  "prettier.arrowParens": "always",
+  "prettier.bracketSpacing": true,
+  "prettier.embeddedLanguageFormatting": "auto",
+  "prettier.htmlWhitespaceSensitivity": "css",
+  "prettier.insertPragma": false,
+  "prettier.jsxSingleQuote": false,
+  "prettier.printWidth": 80,
+  "prettier.proseWrap": "preserve",
+  "prettier.quoteProps": "as-needed",
+  "prettier.requirePragma": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "es5",
+  "prettier.useTabs": false,
+  "prettier.vueIndentScriptAndStyle": false,
   // Emmet
-  "emmet.includeLanguages": { "javascript": "javascriptreact","vue-html": "html" },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html"
+  },
 
   // Javascript and TypeScript
   "typescript.autoClosingTags": true,
   "javascript.autoClosingTags": true,
 
   // Eslint
-   "eslint.packageManager": "yarn",
-   "eslint.nodePath": "/usr/bin/node",
-   "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "yarn",
+  "eslint.nodePath": "/usr/bin/node",
+  "eslint.autoFixOnSave": true,
 
   // Css
   "css.validate": true,
@@ -25,7 +41,7 @@
   "Lua.diagnostics.globals": ["vim"],
 
   // Emoji
-  "coc.source.emoji.filetypes": ["markdown", "javascript","html"],
+  "coc.source.emoji.filetypes": ["markdown", "javascript", "html"],
 
   // Deno
   // "deno.enable": true,
@@ -40,23 +56,23 @@
 
   // Diagnostic Sever
   // "diagnostic-languageserver.formatFiletypes": {
-    // "lua": "lua-format",
-    // "sh": "shfmt",
-    // "zsh": "shfmt"
+  // "lua": "lua-format",
+  // "sh": "shfmt",
+  // "zsh": "shfmt"
   // },
 
   // "diagnostic-languageserver.filetypes": {
-    // "vim": "vint"
+  // "vim": "vint"
   // },
 
   // Snippets
-  "snippets.priority": 1,
+  /* "snippets.priority": 1,
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
-  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/ultisnips",
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/ultisnips", */
 
   // Yank
   // "yank.limit": 50,
@@ -121,9 +137,20 @@
   "diagnostic.hintSign": " ",
 
   // CoC
-  // "coc.preferences.colorSupport": true,
   "coc.preferences.formatOnType": true,
-  "coc.preferences.formatOnSaveFiletypes": ["css","markdown","html","javascript","javascriptreact"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue",
+    "vue-html",
+    "php",
+    "json",
+    "yaml"
+  ],
 
   // "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd",
 
@@ -135,4 +162,3 @@
     }
   }
 }
-
