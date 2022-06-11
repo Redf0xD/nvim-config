@@ -1,42 +1,8 @@
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_root_folder_modifier = ':~'
-vim.g.nvim_tree_add_trailing = 0
-vim.g.vim_tree_tab_open = 1
-vim.g.nvim_tree_group_empty = 0
-vim.g.nvim_tree_width_allow_resize = 1
-vim.g.nvim_tree_icon_padding = ' '
-
-vim.g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = {
-    unstaged = '✗',
-    staged = '✓',
-    unmerged = '',
-    renamed = '➜',
-    untracked = '★',
-    deleted = '',
-    ignored = '◌',
-  },
-  folder = {
-    default = '',
-    open = '',
-    arrow_open = '',
-    arrow_closed = '',
-    empty = ' ',
-    empty_open = ' ',
-    symlink = '',
-    symlink_open = '',
-  },
-  lsp = { hint = ' ', info = ' ', warning = ' ', error = ' ' },
-}
-
 require('nvim-tree').setup({
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
-  open_on_tab = false,
+  open_on_tab = true,
   update_cwd = true,
   ignore_ft_on_setup = {},
   hijack_cursor = false,
@@ -62,7 +28,7 @@ require('nvim-tree').setup({
 
   filters = {
     dotfiles = false,
-    custom = { '.git' },
+    custom = { '.git', '.cache', '.venv', '.idea', '.vscode', '.vscode-test', '.vscode-test-user-data' },
   },
   git = {
     enable = true,
@@ -72,7 +38,7 @@ require('nvim-tree').setup({
 
   view = {
     width = 30,
-    height = 30,
+    side = 'right',
     hide_root_folder = true,
     auto_resize = false,
     mappings = {
@@ -95,8 +61,39 @@ require('nvim-tree').setup({
   },
   renderer = {
     indent_markers = {
-      enable = true,
+      enable = false,
     },
+    icons = {
+      padding = ' ',
+      glyphs = {
+        default = '',
+        symlink = '',
+        git = {
+        unstaged = '✗',
+        staged = '✓',
+        unmerged = '',
+        renamed = '➜',
+        untracked = '★',
+        deleted = '',
+        ignored = '◌',
+        },
+      folder = {
+        default = '',
+        open = '',
+        arrow_open = '',
+        arrow_closed = '',
+        empty = ' ',
+        empty_open = ' ',
+        symlink = '',
+        symlink_open = '',
+        },
+      -- lsp = { hint = ' ', info = ' ', warning = ' ', error = ' ' },
+      },
+    },
+    highlight_opened_files = "icon",
+    highlight_git = true,
+    root_folder_modifier = ':~',
+    add_trailing = false,
+    group_empty = false,
   }
 })
-vim.cmd('highlight NvimTreeFolderIcon guibg=blue')

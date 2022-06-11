@@ -72,7 +72,7 @@ mapper('n', '<C-t>', ':call OpenTerminal()<CR>')
 -- Telescope
 mapper('n', '<C-F>', ':Telescope live_grep<CR>')
 mapper('n', '<C-P>', ':Telescope find_files<CR>')
-mapper('n', '<C-R>', ':Telescope projects<CR>')
+mapper('n', '<C-W>', ':Telescope projects<CR>')
 
 -- Tree
 mapper('n', '<leader>nt', ':NvimTreeToggle<CR>')
