@@ -1,44 +1,51 @@
+local home = os.getenv("HOME")
+local db = require("dashboard")
 -- Grep
-vim.g.dashboard_default_executive = 'telescope'
+db.default_executive = 'telescope'
 
--- Custo Footer
-vim.g.dashboard_custom_footer = { ' Es fácil perder la calma, más difícil es mantenerla' }
+-- db.preview_command = "cat | lolcat"
+db.preview_file_path = home .. "/.config/nvim/static/neovim.cat"
+db.preview_file_height = 12
+db.preview_file_width = 80
 
 -- Custom Header
-vim.g.dashboard_custom_header = {
-'                                                                    ',
-'      ███████████           █████      ██                     ',
-'     ███████████             █████                             ',
-'     ████████████████ ███████████ ███   ███████     ',
-'    ████████████████ ████████████ █████ ██████████████   ',
-'   █████████████████████████████ █████ █████ ████ █████   ',
-' ██████████████████████████████████ █████ █████ ████ █████  ',
-'██████  ███ █████████████████ ████ █████ █████ ████ ██████ ',
-'██████   ██  ███████████████   ██ █████████████████ ',
-'██████   ██  ███████████████   ██ █████████████████ '
+db.custom_header = {
+  '                                                                    ',
+  '      ███████████           █████      ██                     ',
+  '     ███████████             █████                             ',
+  '     ████████████████ ███████████ ███   ███████     ',
+  '    ████████████████ ████████████ █████ ██████████████   ',
+  '   █████████████████████████████ █████ █████ ████ █████   ',
+  ' ██████████████████████████████████ █████ █████ ████ █████  ',
+  '██████  ███ █████████████████ ████ █████ █████ ████ ██████ ',
+  '██████   ██  ███████████████   ██ █████████████████ ',
+  '██████   ██  ███████████████   ██ █████████████████ ',
+  '                                                                      ',
+  '                                                                      '
 }
 
--- Dashboard Sections
-vim.g.dashboard_custom_section = {
-  a = {
-    description = { '  Find File          ' },
-    command = 'Telescope find_files',
-  },
-  b = {
-    description = { '  Recently Used Files' },
-    command = 'Telescope oldfiles',
-  },
-  c = {
-    description = { '  Find Word          ' },
-    command = 'Telescope live_grep',
-  },
-  d = {
-    description = { '  Change Color sheme  ' },
-    command = 'Telescope colorscheme',
-  },
-  e = {
-    description = { '  Settings           ' },
-    command = ':e ~/.config/nvim/init.lua',
-  },
+db.custom_center = {
+  { icon = '  ',
+    desc = 'Recently opened files                   ',
+    action = 'Telescope oldfiles ',
+    shortcut = 'SPC f h' },
+  { icon = '  ',
+    desc = 'Find  File                              ',
+    action = 'Telescope find_files find_command=rg,--hidden,--files',
+    shortcut = 'SPC f f' },
+  { icon = '  ',
+    desc = 'File Browser                            ',
+    action = 'Telescope file_browser',
+    shortcut = 'SPC f b' },
+  { icon = '  ',
+    desc = 'Find  word                              ',
+    action = 'Telescope live_grep',
+    shortcut = 'SPC f w' },
+  { icon = '  ',
+    desc = 'Open Personal dotfiles                  ',
+    action = 'Telescope dotfiles path=' .. home .. '/.dotfiles',
+    shortcut = 'SPC f d' },
 }
 
+-- Custom Footer
+db.custom_footer = { ' Es fácil perder la calma, más difícil es mantenerla' }

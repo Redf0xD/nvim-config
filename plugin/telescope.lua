@@ -1,4 +1,5 @@
-local sorters, actions, previewers = require('telescope.sorters'), require('telescope.actions'), require('telescope.previewers')
+local sorters, actions, previewers = require('telescope.sorters'), require('telescope.actions'),
+    require('telescope.previewers')
 -- Setup Telescope
 require('telescope').setup({
   defaults = {
@@ -11,8 +12,8 @@ require('telescope').setup({
       '--smart-case',
     },
     layout_strategy = 'horizontal',
-     layout_config = {
-      vertical = { width = 0.95, anchor=2 }
+    layout_config = {
+      vertical = { width = 0.95, anchor = 2 }
     },
     initial_mode = 'insert',
     prompt_prefix = ' ❯',
@@ -38,9 +39,14 @@ require('telescope').setup({
       override_generic_sorter = false,
       override_file_sorter = true,
     },
+    -- Browser like previewer
+    file_browser = {
+      hijack_netrw = true,
+    },
   },
 })
 
 -- Load Telescope extensions
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('projects')
+require("telescope").load_extension('file_browser')
