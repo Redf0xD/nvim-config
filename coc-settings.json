@@ -103,7 +103,8 @@
     "php",
     "json",
     "yaml",
-    "lua"
+    "lua",
+    "scss"
   ],
 
   "languageserver": {
