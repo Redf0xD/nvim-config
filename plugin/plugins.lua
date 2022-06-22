@@ -10,7 +10,7 @@ return require('packer').startup(function()
     branch = 'master',
     run = 'yarn install --frozen-lockfile',
   })
-  use 'github/copilot.vim'
+  -- use 'github/copilot.vim'
   use 'lewis6991/impatient.nvim'
   -- Themes
   use({
