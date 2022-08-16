@@ -6,10 +6,6 @@ require('nvim-tree').setup({
   update_cwd = true,
   ignore_ft_on_setup = {},
   hijack_cursor = false,
-  update_to_buf_dir = {
-    enable = true,
-    auto_open = true,
-  },
   diagnostics = {
     enable = true,
     icons = {
@@ -29,6 +25,7 @@ require('nvim-tree').setup({
   filters = {
     dotfiles = false,
     custom = { '.git', '.cache', '.venv', '.idea', '.vscode', '.vscode-test', '.vscode-test-user-data' },
+    exclude = {'.gitignore'},
   },
   git = {
     enable = true,
@@ -40,7 +37,6 @@ require('nvim-tree').setup({
     width = 30,
     side = 'right',
     hide_root_folder = true,
-    auto_resize = false,
     mappings = {
       custom_only = false,
       list = {},
@@ -65,6 +61,7 @@ require('nvim-tree').setup({
     },
     icons = {
       padding = ' ',
+      webdev_colors = true,
       glyphs = {
         default = '',
         symlink = '',

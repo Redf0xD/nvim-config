@@ -17,7 +17,7 @@ end
 vim.g.mapleader = ' '
 
 -- Open the file init.vim
-mapper('n','<leader>e', ':Dashboard<CR>')
+mapper('n', '<leader>e', ':Dashboard<CR>')
 
 -- Save
 mapper('n', '<leader>w', ':w<CR>')
@@ -86,7 +86,7 @@ mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style(
 
 -- Coc.nvim
 mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
--- mapper('n', '<F3>', ':Format<CR>')
+mapper('n', '<F3>', ':Format<CR>')
 
 plug_mapper('n', '<leader>rn', '<Plug>(coc-rename)')
 
@@ -139,4 +139,3 @@ vnoremap <silent> <M-j>  :<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv
 
 nnoremap <silent> <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 ]])
-

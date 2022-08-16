@@ -7,15 +7,15 @@ vim.g.loaded_ruby_provider = 0
 -- vim.g.ruby_host_prog = '/usr/bin/ruby'
 
 -- Deactivate Node Provider
-vim.g.loaded_node_provider = 0
--- vim.g.node_host_prog = '/usr/bin/node'
+vim.g.loaded_node_provider = 1
+vim.g.node_host_prog = '/usr/bin/node'
 
 -- Deactivate Python 2 Provider
 vim.g.loaded_python_provider = 0
 
 -- Load Python 3 Provider
--- vim.g.loaded_python3_provider = 1
-vim.g.python3_host_prog = '/usr/bin/python'
+vim.g.loaded_python3_provider = 1
+vim.g.python3_host_prog = '/usr/bin/python3.8'
 
 vim.g.loaded_tutor = 1
 vim.g.loaded_spec = 1

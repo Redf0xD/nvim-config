@@ -1,5 +1,5 @@
 {
-  "prettier.arrowParens": "always",
+  "prettier.arrowParens": "avoid",
   "prettier.bracketSpacing": true,
   "prettier.embeddedLanguageFormatting": "auto",
   "prettier.htmlWhitespaceSensitivity": "css",
@@ -9,21 +9,22 @@
   "prettier.proseWrap": "preserve",
   "prettier.quoteProps": "as-needed",
   "prettier.requirePragma": false,
-  "prettier.semi": true,
+  "prettier.semi": false,
   "prettier.singleQuote": true,
   "prettier.tabWidth": 2,
-  "prettier.trailingComma": "es5",
+  "prettier.trailingComma": "none",
   "prettier.useTabs": false,
   "prettier.vueIndentScriptAndStyle": false,
 
   "emmet.includeLanguages": {
-    "javascript": "javascriptreact",
-    "vue-html": "html"
+    "javascript": ["javascriptreact", "javascript"],
+    "vue-html": "html",
+    "svelte": "html"
   },
   "typescript.autoClosingTags": true,
   "javascript.autoClosingTags": true,
 
-  "eslint.packageManager": "yarn",
+  "eslint.packageManager": "pnpm",
   "eslint.nodePath": "/usr/bin/node",
   "eslint.autoFixOnSave": true,
 
@@ -34,7 +35,7 @@
 
   "Lua.diagnostics.globals": ["vim", "use"],
 
-  "coc.source.emoji.filetypes": ["markdown", "html"],
+  "coc.source.emoji.filetypes": ["markdown", "html", "javascriptreact"],
   "suggest.completionItemKindLabels": {
     "method": "  ",
     "function": "  ",
@@ -90,22 +91,6 @@
   "diagnostic.hintSign": " ",
 
   "coc.preferences.formatOnType": true,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "css",
-    "markdown",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "vue-html",
-    "php",
-    "json",
-    "yaml",
-    "lua",
-    "scss"
-  ],
 
   "languageserver": {
     "ocaml-lsp": {

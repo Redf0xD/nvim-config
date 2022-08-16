@@ -1,22 +1,21 @@
 require('nvim-treesitter.configs').setup({
-        highlight = { enable = true },
-        indent = { enable = true },
-
-        rainbow = {
-                enable = true,
-                extended_mode = true,
-        },
+  highlight = { enable = true },
+  indent = { enable = true },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+  },
 })
 -- require('nvim-treesitter.configs').setup({
-  -- ensure_installed = 'maintained',
-  -- incremental_selection = { enable = false },
-  -- highlight = { enable = true, additional_vim_regex_highlighting = false },
-  -- indent = { enable = true },
-  -- autotag = {enable = true},
-  -- rainbow = {
-    -- enable = true,
-    -- extended_mode = true,
-  -- },
+-- ensure_installed = 'maintained',
+-- incremental_selection = { enable = false },
+-- highlight = { enable = true, additional_vim_regex_highlighting = false },
+-- indent = { enable = true },
+-- autotag = {enable = true},
+-- rainbow = {
+-- enable = true,
+-- extended_mode = true,
+-- },
 -- })
 -- require "nvim-treesitter.parsers".get_parser_configs().Solidity = {
 --     install_info = {
