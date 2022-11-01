@@ -137,6 +137,7 @@ vim.o.grepprg = 'rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs
 vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 
 -- Important
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.o.completeopt = 'menuone,noinsert,noselect'
 
 -- Very lazy please
@@ -165,4 +166,3 @@ vim.g.history = 1000
 
 -- Add chars to '%'
 vim.bo.matchpairs = "(:),{:},[:],<:>,':'"
-

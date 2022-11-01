@@ -84,24 +84,6 @@ mapper('n', '<Leader>o', ':HopPattern<CR>')
 -- Switch Theme
 mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]])
 
--- Coc.nvim
-mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
-mapper('n', '<F3>', ':Format<CR>')
-
-plug_mapper('n', '<leader>rn', '<Plug>(coc-rename)')
-
-plug_mapper('n', 'gd', '<Plug>(coc-definition)')
-plug_mapper('n', 'gr', '<Plug>(coc-references)')
-
-plug_mapper('n', '<leader>ca', '<Plug>(coc-codeaction)')
-plug_mapper('n', '<leader>ga', '<Plug>(coc-codeaction-cursor)')
-plug_mapper('x', '<leader>ga', '<Plug>(coc-codeaction-selected)')
-plug_mapper('n', '<leader>qf', '<Plug>(coc-fix-current)')
-
-plug_mapper('n', '<Right>', '<Plug>(coc-diagnostic-prev)')
-plug_mapper('n', '<Left>', '<Plug>(coc-diagnostic-next)')
-
-expressive_mapper('i', '<C-space>', 'coc#refresh()')
 -- Debugger Config
 
 mapper('n', '<leader>ds', ':lua require"dap".continue()<CR>') -- Start debugging

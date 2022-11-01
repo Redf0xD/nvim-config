@@ -1,28 +1,6 @@
+let g:copilot_no_tab_map = v:true
+imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
 set clipboard+=unnamedplus
-let g:coc_global_extensions = ['coc-marketplace']
-function! CheckBackSpace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-  " Insert <tab> when previous text is space, refresh completion if not.
-  inoremap <silent><expr> <TAB>
-    \ coc#pum#visible() ? coc#_select_confirm() :
-    \ coc#expandableOrJumpable() ?
-    \ "\<C-r>=coc#rpc#request('doKeymap',''])\<CR>" :
-    \ CheckBackSpace() ? "\<TAB>" :
-    \ coc#refresh()
-
-  function! CheckBackSpace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
-
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-inoremap <silent><expr> <c-space> coc#refresh()
-
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
-				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " open Terminal with <C-t>
 set splitright

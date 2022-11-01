@@ -1,17 +1,30 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
--- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+
   -- LSP Provider
-  use({
-    'neoclide/coc.nvim',
-    branch = 'master',
-    run = 'yarn install --frozen-lockfile',
-  })
-  -- use 'github/copilot.vim'
+  use 'onsails/lspkind-nvim' -- vscode-like pictograms
+  use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
+  use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
+  use 'hrsh7th/cmp-path' -- nvim-cmp source for file paths
+  use 'hrsh7th/nvim-cmp' -- Completion
+  use 'neovim/nvim-lspconfig' -- LSP
+  use 'jose-elias-alvarez/null-ls.nvim' -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
+  use 'folke/lsp-colors.nvim'
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+
+  use 'glepnir/lspsaga.nvim' -- LSP UIs
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'rafamadriz/friendly-snippets'
+  use 'mfussenegger/nvim-dap'
   use 'lewis6991/impatient.nvim'
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
   -- Themes
   use({
     "catppuccin/nvim",
@@ -20,11 +33,6 @@ return require('packer').startup(function()
   use({ 'marko-cerovac/material.nvim', opt = false })
   -- Utilities
   use 'mbbill/undotree'
-  use {
-    "prettier/vim-prettier",
-    ft = { "html", "javascript", "typescript", "css", "less", "scss", "sass", "markdown", "vue", "json", "lua" },
-    run = "yarn install",
-  }
   use({
     'nvim-telescope/telescope.nvim',
     requires = {
@@ -51,6 +59,7 @@ return require('packer').startup(function()
     require('gitsigns').setup()
   end }
 
+  use 'dinhhuy258/git.nvim' -- For git blame & browse
   use({ 'tpope/vim-surround' })
   use({ "windwp/nvim-autopairs",
     config = function()
@@ -59,13 +68,11 @@ return require('packer').startup(function()
       })
     end,
   })
-
+  use 'windwp/nvim-ts-autotag'
   -- Syntax Highlighting
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
-  use('MaxMEllon/vim-jsx-pretty')
-  use('pangloss/vim-javascript')
-  use('styled-components/vim-styled-components')
-  use('iloginow/vim-stylus')
+  -- use('styled-components/vim-styled-components')
+
   -- UI Plugins
   use { 'glepnir/dashboard-nvim' }
   use('nvim-lualine/lualine.nvim')
@@ -86,21 +93,10 @@ return require('packer').startup(function()
       require 'hop'.setup({ keys = 'etovxqpdygfblzhckisuran' })
     end,
   })
-  use({
-    'pwntester/octo.nvim',
-    opt = true,
-    config = function()
-      require('octo').setup()
-    end,
-  })
   use {
     "ahmedkhalf/project.nvim",
     config = function()
-      require("project_nvim").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
+      require("project_nvim").setup {}
     end
   }
 end)
