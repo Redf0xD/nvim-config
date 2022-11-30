@@ -4,22 +4,14 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- LSP Provider
-  use 'onsails/lspkind-nvim' -- vscode-like pictograms
-  use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
-  use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in LSP
-  use 'hrsh7th/cmp-path' -- nvim-cmp source for file paths
-  use 'hrsh7th/nvim-cmp' -- Completion
-  use 'neovim/nvim-lspconfig' -- LSP
-  use 'jose-elias-alvarez/null-ls.nvim' -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
-  use 'folke/lsp-colors.nvim'
-  use 'williamboman/mason.nvim'
-  use 'williamboman/mason-lspconfig.nvim'
+use ({ 'neoclide/coc.nvim',
+                branch = 'master',
+                run = 'yarn install --frozen-lockfile',})
 
-  use 'glepnir/lspsaga.nvim' -- LSP UIs
+
+  use 'pangloss/vim-javascript'
   use 'L3MON4D3/LuaSnip'
-  use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
-  use 'mfussenegger/nvim-dap'
   use 'lewis6991/impatient.nvim'
   use({
     "iamcco/markdown-preview.nvim",

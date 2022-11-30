@@ -44,4 +44,4 @@ vim.g.vimsyn_embed = 1
 vim.g.did_load_filetypes = 1
 
 -- Set Shell
-vim.g.shell = '/usr/bin/zsh'
+vim.g.shell = '/usr/bin/fish'

@@ -1,5 +1,0 @@
-{
-  "eslint.packageManager": "pnpm",
-  "eslint.nodePath": "/usr/bin/node",
-  "eslint.autoFixOnSave": true,
-}

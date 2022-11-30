@@ -1,11 +1,9 @@
 require('nvim-tree').setup({
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = false,
-  open_on_tab = true,
   update_cwd = true,
-  ignore_ft_on_setup = {},
-  hijack_cursor = false,
+  hijack_cursor = true,
+  prefer_startup_root = true,
   diagnostics = {
     enable = true,
     icons = {
@@ -18,29 +16,23 @@ require('nvim-tree').setup({
 
   update_focused_file = {
     enable = true,
-    update_cwd = true,
-    ignore_list = {},
+    update_root = true,
   },
 
   filters = {
     dotfiles = false,
     custom = { '.git', '.cache', '.venv', '.idea', '.vscode', '.vscode-test', '.vscode-test-user-data' },
-    exclude = {'.gitignore'},
+    exclude = { '.gitignore' },
   },
   git = {
     enable = true,
     ignore = true,
-    timeout = 500,
+    timeout = 300,
   },
 
   view = {
     width = 30,
     side = 'right',
-    hide_root_folder = true,
-    mappings = {
-      custom_only = false,
-      list = {},
-    },
   },
   trash = {
     cmd = "trash",
@@ -49,11 +41,8 @@ require('nvim-tree').setup({
   actions = {
     change_dir = {
       enable = true,
-      global = false,
+      global = true,
     },
-    open_file = {
-      quit_on_open = true,
-    }
   },
   renderer = {
     indent_markers = {
@@ -84,7 +73,6 @@ require('nvim-tree').setup({
           symlink = '',
           symlink_open = '',
         },
-        -- lsp = { hint = ' ', info = ' ', warning = ' ', error = ' ' },
       },
     },
     highlight_opened_files = "icon",
