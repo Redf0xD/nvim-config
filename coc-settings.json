@@ -31,7 +31,6 @@
   "css.validate": true,
   "less.validate": false,
   "scss.validate": false,
-  "wxss.validate": false,
 
   "Lua.diagnostics.globals": ["vim", "use"],
 
@@ -75,14 +74,11 @@
 
   "suggest.autoTrigger": "always",
   "suggest.localityBonus": true,
-  "suggest.fixInsertedWord": true,
   "suggest.enablePreselect": true,
   "suggest.removeDuplicateItems": true,
   "suggest.preferCompleteThanJumpPlaceholder": true,
   "suggest.defaultSortMethod": "alphabetical",
   "suggest.triggerAfterInsertEnter": false,
-  "suggest.detailField": "menu",
-  "suggest.keepCompleteopt": false,
   "suggest.noselect": false,
 
   "diagnostic.errorSign": " ",
@@ -99,5 +95,6 @@
       "filetypes": ["ocaml", "reason"]
     }
   },
-  "Lua.telemetry.enable": false
+  "Lua.telemetry.enable": false,
+  "snippets.ultisnips.pythonPrompt": false
 }
