@@ -23,12 +23,7 @@ end
 -- NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 -- other plugin before putting this into your config.
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
-
--- Make <CR> to accept selected completion item or notify coc.nvim to format
--- <C-g>u breaks current undo, please make your own choice.
-keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
 
 -- Use <c-j> to trigger snippets
 keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
@@ -41,10 +36,10 @@ keyset("n", "<Left>", "<Plug>(coc-diagnostic-prev)", {silent = true})
 keyset("n", "<Right>", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation.
-keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+keyset("n", "<leader>gd", "<Plug>(coc-definition)", {silent = true})
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+keyset("n", "<leader>gr", "<Plug>(coc-references)", {silent = true})
 
 
 -- Use K to show documentation in preview window.
@@ -75,8 +70,8 @@ keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
 
 
 -- Formatting selected code.
-keyset("x", "<F3>", "<Plug>(coc-format-selected)", {silent = true})
-keyset("n", "<F3>", "<Plug>(coc-format-selected)", {silent = true})
+keyset("x", "<F3>", ":Format<CR>", {silent = true})
+keyset("n", "<F3>", ":Format<CR>", {silent = true})
 
 
 -- Setup formatexpr specified filetype(s).
@@ -116,14 +111,14 @@ keyset("n", "<leader>cl", "<Plug>(coc-codelens-action)", opts)
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-keyset("x", "if", "<Plug>(coc-funcobj-i)", opts)
-keyset("o", "if", "<Plug>(coc-funcobj-i)", opts)
-keyset("x", "af", "<Plug>(coc-funcobj-a)", opts)
-keyset("o", "af", "<Plug>(coc-funcobj-a)", opts)
-keyset("x", "ic", "<Plug>(coc-classobj-i)", opts)
-keyset("o", "ic", "<Plug>(coc-classobj-i)", opts)
-keyset("x", "ac", "<Plug>(coc-classobj-a)", opts)
-keyset("o", "ac", "<Plug>(coc-classobj-a)", opts)
+keyset("x", "<leader>if", "<Plug>(coc-funcobj-i)", opts)
+keyset("o", "<leader>if", "<Plug>(coc-funcobj-i)", opts)
+keyset("x", "<leader>af", "<Plug>(coc-funcobj-a)", opts)
+keyset("o", "<leader>af", "<Plug>(coc-funcobj-a)", opts)
+keyset("x", "<leader>ic", "<Plug>(coc-classobj-i)", opts)
+keyset("o", "<leader>ic", "<Plug>(coc-classobj-i)", opts)
+keyset("x", "<leader>ac", "<Plug>(coc-classobj-a)", opts)
+keyset("o", "<leader>ac", "<Plug>(coc-classobj-a)", opts)
 
 
 -- Remap <C-f> and <C-b> for scroll float windows/popups.

@@ -16,9 +16,6 @@ end
 -- Define Mapleader
 vim.g.mapleader = ' '
 
--- Open the file init.vim
-mapper('n', '<leader>e', ':Dashboard<CR>')
-
 -- Save
 mapper('n', '<leader>w', ':w<CR>')
 
@@ -63,10 +60,6 @@ mapper('v', '<Leader>P', '"+P"`"`"')
 
 mapper('n', 'J', 'mzJ`z')
 
--- Open Terminal
-mapper('n', '<C-t>', ':call OpenTerminal()<CR>')
-
-
 -- Plugins Mappings ↓
 
 -- Telescope
@@ -83,16 +76,6 @@ mapper('n', '<Leader>o', ':HopPattern<CR>')
 
 -- Switch Theme
 mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]])
-
--- Debugger Config
-
-mapper('n', '<leader>ds', ':lua require"dap".continue()<CR>') -- Start debugging
-mapper('n', '<leader>db', ':lua require"dap".toggle_breakpoint()<CR>') -- Toggle breakpoint
-mapper('n', '<leader>dt', ':lua require"dap".step_over()<CR>') -- Step over
-mapper('n', '<leader>di', ':lua require"dap".step_into()<CR>') -- Step into
-mapper('n', '<leader>do', ':lua require"dap".step_out()<CR>') -- Step out
-mapper('n', '<leader>dr', ':lua require"dap".repl.toggle()<CR>') -- Toggle REPL
-mapper('n', '<leader>dc', ':lua require"dap".terminate()<CR>') -- End the debugging session
 
 -- Bufferline Config
 mapper('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>')

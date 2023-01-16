@@ -19,7 +19,8 @@
   "emmet.includeLanguages": {
     "javascript": ["javascriptreact", "javascript"],
     "vue-html": "html",
-    "svelte": "html"
+    "svelte": "html",
+    "django": "html"
   },
   "typescript.autoClosingTags": true,
   "javascript.autoClosingTags": true,
