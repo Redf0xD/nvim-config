@@ -13,8 +13,8 @@ require("catppuccin").setup({
     path = vim.fn.stdpath "cache" .. "/catppuccin",
   },
   styles = {
-    comments = { "italic" },
-    conditionals = { "italic" },
+    comments = {},
+    conditionals = {},
     loops = {},
     functions = {},
     keywords = {},
@@ -27,8 +27,8 @@ require("catppuccin").setup({
     operators = {},
   },
   integrations = {
-    treesitter = true,
-    treesitter_context = true,
+    treesitter = false,
+    treesitter_context = false,
     native_lsp = {
       enabled = true,
       virtual_text = {
