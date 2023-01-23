@@ -33,6 +33,10 @@ vim.wo.cursorline = true
 
 vim.o.pumheight = 10
 
--- Theme
--- vim.cmd[[colorscheme material]]
--- vim.cmd([[colorscheme material]])
+-- Always show the signcolumn, otherwise it would shift the text each time
+vim.opt.signcolumn = "yes"
+
+vim.opt.backup = false
+vim.opt.writebackup = false
+
+vim.opt.updatetime = 300

@@ -87,7 +87,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": " ",
 
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSave": true,
 
   "languageserver": {
     "ocaml-lsp": {
@@ -97,5 +97,6 @@
     }
   },
   "Lua.telemetry.enable": false,
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "coc.preferences.extensionUpdateCheck": "daily"
 }

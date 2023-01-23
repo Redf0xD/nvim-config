@@ -25,7 +25,7 @@ return require('packer').startup(function()
     run = 'pnpm install', })
 
 
-  -- use 'pangloss/vim-javascript'
+  use 'pangloss/vim-javascript'
   use 'L3MON4D3/LuaSnip'
   use 'rafamadriz/friendly-snippets'
   use 'lewis6991/impatient.nvim'

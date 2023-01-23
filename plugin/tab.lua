@@ -1,6 +1,5 @@
 require('bufferline').setup({
   options = {
-    mode = 'tab',
     indicator = { icon = ' ' },
     separator_style = 'slant',
     always_show_bufferline = true,
@@ -9,7 +8,7 @@ require('bufferline').setup({
     left_trunc_marker = '',
     right_trunc_marker = '',
     offsets = {
-      { filetype = 'NvimTree', text = "EXPLORER", text_align = 'center', highlight = "Directory" },
+      { filetype = 'NvimTree', text = "File Explorer", text_align = 'center', highlight = "Directory" },
     },
     show_tab_indicators = true,
     show_close_icon = false,

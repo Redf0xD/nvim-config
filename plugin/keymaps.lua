@@ -5,7 +5,7 @@ end
 
 -- Expressive Mapping helper
 local expressive_mapper = function(mode, key, result)
-  vim.api.nvim_set_keymap(mode, key, result, { silent = true, expr = true })
+  vim.api.nvim_set_keymap(mode, key, result, { silent = true, noremap = true, expr = true, replace_keycodes = false })
 end
 
 -- Default Mapping helper
@@ -35,8 +35,8 @@ mapper('n', 'tt', ':t.<CR>')
 mapper('n', '<Esc>', ':noh<CR>')
 
 --Fast Scroll
--- plug_mapper('n', '<C-j>', '10<C-e>')
--- plug_mapper('n', '<C-k>', '10<C-y>')
+mapper('n', '<C-j>', '10<C-e>')
+mapper('n', '<C-k>', '10<C-y>')
 
 -- Get out of the Terminal
 mapper('t', '<Esc>', '<C-\\><C-n>')
@@ -74,8 +74,57 @@ mapper('n', '<leader>nt', ':NvimTreeToggle<CR>')
 mapper('n', '<Leader>f', ':HopWord<CR>')
 mapper('n', '<Leader>o', ':HopPattern<CR>')
 
--- Switch Theme
-mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]])
+-- COC
+expressive_mapper("i", "<TAB>",
+  'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()')
+
+-- Use <c-space> to trigger completion.
+expressive_mapper("i", "<c-space>", "coc#refresh()")
+
+-- Use `Left` and `Right` to navigate diagnostics
+mapper("n", "<Left>", "<Plug>(coc-diagnostic-prev)")
+mapper("n", "<Right>", "<Plug>(coc-diagnostic-next)")
+
+mapper('n', '<F2>', ':CocCommand<CR>')
+mapper('n', 'qf', "<Plug>(coc-fix-current)")
+
+-- open a terminal
+mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
+
+-- Formatting selected code.
+mapper("x", "<F3>", ":Format<CR>")
+mapper("n", "<F3>", ":Format<CR>")
+
+plug_mapper('n', '<leader>rn', '<Plug>(coc-rename)')
+
+-- GoTo code navigation.
+plug_mapper('n', 'gd', '<Plug>(coc-definition)')
+plug_mapper('n', 'gr', '<Plug>(coc-references)')
+
+-- Remap keys for applying codeAction to the current buffer.
+plug_mapper('n', '<leader>ca', '<Plug>(coc-codeaction)')
+plug_mapper('n', '<leader>ga', '<Plug>(coc-codeaction-cursor)')
+plug_mapper('x', '<leader>ga', '<Plug>(coc-codeaction-selected)')
+-- Apply AutoFix to problem on the current line.
+plug_mapper('n', '<leader>qf', '<Plug>(coc-fix-current)')
+
+-- Show all diagnostics.
+mapper("n", "<space>a", ":<C-u>CocList diagnostics<cr>")
+
+-- Use CTRL-S for selections ranges.
+mapper("n", "<C-s>", "<Plug>(coc-range-select)")
+mapper("x", "<C-s>", "<Plug>(coc-range-select)")
+
+-- Remap <C-f> and <C-b> for scroll float windows/popups.
+mapper("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+mapper("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+mapper("i", "<C-f>",
+  'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"')
+mapper("i", "<C-b>",
+  'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"')
+mapper("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+mapper("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+
 
 -- Bufferline Config
 mapper('n', '<leader>1', ':BufferLineGoToBuffer 1<CR>')
@@ -87,7 +136,7 @@ mapper('n', '<leader>6', ':BufferLineGoToBuffer 6<CR>')
 mapper('n', '<leader>7', ':BufferLineGoToBuffer 7<CR>')
 mapper('n', '<leader>8', ':BufferLineGoToBuffer 8<CR>')
 mapper('n', '<leader>9', ':BufferLineGoToBuffer 9<CR>')
-
+mapper('n', '<F4>', ':BufferLineSortByDirectory<CR>')
 mapper('n', '<M-.>', ':BufferLineCycleNext<CR>')
 mapper('n', '<M-,>', ':BufferLineCyclePrev<CR>')
 mapper('n', '<M-c>', ':BufferLinePickClose <CR>')
