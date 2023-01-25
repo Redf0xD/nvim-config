@@ -63,9 +63,9 @@ mapper('n', 'J', 'mzJ`z')
 -- Plugins Mappings ↓
 
 -- Telescope
-mapper('n', '<C-F>', ':Telescope live_grep<CR>')
-mapper('n', '<C-P>', ':Telescope find_files<CR>')
-mapper('n', '<C-W>', ':Telescope projects<CR>')
+mapper('n', '<C-f>', ':Telescope live_grep<CR>')
+mapper('n', '<C-p>', ':Telescope find_files<CR>')
+mapper('n', '<C-w>', ':Telescope projects<CR>')
 
 -- Tree
 mapper('n', '<leader>nt', ':NvimTreeToggle<CR>')
@@ -116,14 +116,14 @@ mapper("n", "<C-s>", "<Plug>(coc-range-select)")
 mapper("x", "<C-s>", "<Plug>(coc-range-select)")
 
 -- Remap <C-f> and <C-b> for scroll float windows/popups.
-mapper("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
-mapper("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
-mapper("i", "<C-f>",
+expressive_mapper("n", "<C-h>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+expressive_mapper("n", "<C-l>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+expressive_mapper("i", "<C-h>",
   'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"')
-mapper("i", "<C-b>",
+expressive_mapper("i", "<C-l>",
   'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"')
-mapper("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
-mapper("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+expressive_mapper("v", "<C-h>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+expressive_mapper("v", "<C-l>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
 
 
 -- Bufferline Config

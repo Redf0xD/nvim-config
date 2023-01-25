@@ -1,3 +1,24 @@
+-- Auto install extensions
+vim.g.coc_global_extensions = {
+  'coc-snippets',
+  'coc-webview',
+  'coc-terminal',
+  'coc-prettier',
+  'coc-git',
+  'coc-eslint',
+  'coc-emoji',
+  'coc-emmet',
+  'coc-xml',
+  'coc-tsserver',
+  'coc-sumneko-lua',
+  'coc-pyright',
+  'coc-markdown-preview-enhanced',
+  'coc-json',
+  'coc-deno',
+  'coc-css',
+  '@yaegassy/coc-tailwindcss3'
+}
+
 -- Auto complete
 function _G.check_back_space()
   local col = vim.fn.col('.') - 1
