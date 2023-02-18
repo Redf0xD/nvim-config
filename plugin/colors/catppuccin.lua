@@ -6,7 +6,7 @@ require("catppuccin").setup({
     shade = "dark",
     percentage = 0.15,
   },
-  transparent_background = false,
+  transparent_background = true,
   term_colors = false,
   compile = {
     enabled = false,

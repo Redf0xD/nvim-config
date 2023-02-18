@@ -15,27 +15,32 @@
   "prettier.trailingComma": "none",
   "prettier.useTabs": false,
   "prettier.vueIndentScriptAndStyle": false,
-
   "emmet.includeLanguages": {
-    "javascript": ["javascriptreact", "javascript"],
+    "javascript": [
+      "javascriptreact",
+      "javascript"
+    ],
     "vue-html": "html",
     "svelte": "html",
     "django": "html"
   },
   "typescript.autoClosingTags": true,
   "javascript.autoClosingTags": true,
-
   "eslint.packageManager": "pnpm",
   "eslint.nodePath": "/usr/bin/node",
   "eslint.autoFixOnSave": true,
-
   "css.validate": true,
   "less.validate": false,
   "scss.validate": false,
-
-  "Lua.diagnostics.globals": ["vim", "use"],
-
-  "coc.source.emoji.filetypes": ["markdown", "html", "javascriptreact"],
+  "Lua.diagnostics.globals": [
+    "vim",
+    "use"
+  ],
+  "coc.source.emoji.filetypes": [
+    "markdown",
+    "html",
+    "javascriptreact"
+  ],
   "suggest.completionItemKindLabels": {
     "method": "  ",
     "function": "  ",
@@ -64,15 +69,9 @@
     "enumMember": "  ",
     "default": "  "
   },
-
-  "suggest.highPrioritySourceLimit": 10,
-  "suggest.languageSourcePriority": 95,
-  "suggest.lowPrioritySourceLimit": 90,
-
   "coc.source.file.priority": 60,
   "coc.source.buffer.priority": 50,
   "suggest.triggerCompletionWait": 30,
-
   "suggest.autoTrigger": "always",
   "suggest.localityBonus": true,
   "suggest.enablePreselect": true,
@@ -81,22 +80,29 @@
   "suggest.defaultSortMethod": "alphabetical",
   "suggest.triggerAfterInsertEnter": false,
   "suggest.noselect": false,
-
   "diagnostic.errorSign": " ",
   "diagnostic.warningSign": " ",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": " ",
-
   "coc.preferences.formatOnSave": true,
-
   "languageserver": {
     "ocaml-lsp": {
       "command": "opam",
-      "args": ["config", "exec", "--", "ocamllsp"],
-      "filetypes": ["ocaml", "reason"]
+      "args": [
+        "config",
+        "exec",
+        "--",
+        "ocamllsp"
+      ],
+      "filetypes": [
+        "ocaml",
+        "reason"
+      ]
     }
   },
   "Lua.telemetry.enable": false,
   "snippets.ultisnips.pythonPrompt": false,
-  "coc.preferences.extensionUpdateCheck": "daily"
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "markdown-preview-enhanced.liveUpdate": true,
+  "svelte.enable-ts-plugin": true
 }

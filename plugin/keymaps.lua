@@ -13,6 +13,10 @@ local plug_mapper = function(mode, key, result)
   vim.api.nvim_set_keymap(mode, key, result, {})
 end
 
+local coc_mapper = function(mode, key, result)
+  vim.api.nvim_set_keymap(mode, key, result, { silent = true, expr = true })
+end
+
 -- Define Mapleader
 vim.g.mapleader = ' '
 
@@ -24,9 +28,6 @@ mapper('n', '<leader>q', ':q<CR>')
 
 --Force Exit
 mapper('n', '<leader>qq', ':qa!<CR>')
-
---Buffers Delete
--- mapper('n', '<leader>b', ':bdelete<CR>')
 
 -- Duplitcate Line
 mapper('n', 'tt', ':t.<CR>')
@@ -79,7 +80,7 @@ expressive_mapper("i", "<TAB>",
   'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()')
 
 -- Use <c-space> to trigger completion.
-expressive_mapper("i", "<c-space>", "coc#refresh()")
+expressive_mapper("i", "<c-leader>", "coc#refresh()")
 
 -- Use `Left` and `Right` to navigate diagnostics
 mapper("n", "<Left>", "<Plug>(coc-diagnostic-prev)")
@@ -105,8 +106,6 @@ plug_mapper('n', 'gr', '<Plug>(coc-references)')
 plug_mapper('n', '<leader>ca', '<Plug>(coc-codeaction)')
 plug_mapper('n', '<leader>ga', '<Plug>(coc-codeaction-cursor)')
 plug_mapper('x', '<leader>ga', '<Plug>(coc-codeaction-selected)')
--- Apply AutoFix to problem on the current line.
-plug_mapper('n', '<leader>qf', '<Plug>(coc-fix-current)')
 
 -- Show all diagnostics.
 mapper("n", "<space>a", ":<C-u>CocList diagnostics<cr>")
