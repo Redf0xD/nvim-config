@@ -1,14 +1,3 @@
---- ### nvim LSP
---
--- This module is automatically loaded by nvim on during it's initialization into global variable `nvim.lsp`
---
--- This module can also be manually loaded with `local updater = require("core.utils").lsp`
---
--- @module core.utils.lsp
--- @see core.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
-
 nvim.lsp = {}
 local tbl_contains = vim.tbl_contains
 local tbl_isempty = vim.tbl_isempty
@@ -34,7 +23,6 @@ end
 -- @param server the name of the server to be setup
 nvim.lsp.setup = function(server)
     if not tbl_contains({}, server) then
-        print(server)
         local opts = nvim.lsp.server_settings(server)
         require("lspconfig")[server].setup(opts)
     end

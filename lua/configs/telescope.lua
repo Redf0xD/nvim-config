@@ -1,52 +1,37 @@
-local sorters, actions, previewers = require('telescope.sorters'), require('telescope.actions'),
-    require('telescope.previewers')
--- Setup Telescope
-require('telescope').setup({
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
+local telescope = require "telescope"
+local actions = require "telescope.actions"
+
+telescope.setup({
+    defaults = {
+        prompt_prefix = string.format("%s ", nvim.get_icon "Search"),
+        selection_caret = string.format("%s ", nvim.get_icon "Selected"),
+        path_display = { "truncate" },
+        sorting_strategy = "ascending",
+        layout_config = {
+            horizontal = {
+                prompt_position = "top",
+                preview_width = 0.55,
+                results_width = 0.8,
+            },
+            vertical = {
+                mirror = false,
+            },
+            width = 0.87,
+            height = 0.80,
+            preview_cutoff = 120,
+        },
+
+        mappings = {
+            i = {
+                ["<C-n>"] = actions.cycle_history_next,
+                ["<C-p>"] = actions.cycle_history_prev,
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+            },
+            n = { ["q"] = actions.close },
+        },
     },
-    layout_strategy = 'horizontal',
-    layout_config = {
-      vertical = { width = 0.95, anchor = 2 }
-    },
-    initial_mode = 'insert',
-    prompt_prefix = ' ❯',
-    file_ignore_patterns = { '.git/*', 'node_modules', 'env/*' },
-    color_devicons = true,
-    winblend = 20,
-    file_sorter = sorters.get_fzy_sorter,
-    generic_sorter = sorters.get_fzy_sorter,
-    file_previewer = previewers.vim_buffer_cat.new,
-    grep_previewer = previewers.vim_buffer_vimgrep.new,
-    qflist_previewer = previewers.vim_buffer_qflist.new,
-    mappings = {
-      i = {
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
-        ['<Esc>'] = actions.close,
-      },
-    },
-  },
-  extensions = {
-    -- Fast, fast, really fast sorter
-    fzy_native = {
-      override_generic_sorter = false,
-      override_file_sorter = true,
-    },
-    -- Browser like previewer
-    file_browser = {
-      hijack_netrw = true,
-    },
-  },
 })
 
--- Load Telescope extensions
-require('telescope').load_extension('fzy_native')
-require('telescope').load_extension('projects')
-require("telescope").load_extension('file_browser')
+nvim.conditional_func(telescope.load_extension, pcall(require, "notify"), "notify")
+nvim.conditional_func(telescope.load_extension, pcall(require, "aerial"), "aerial")
