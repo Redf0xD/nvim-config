@@ -3,6 +3,7 @@ local tbl_contains = vim.tbl_contains
 local tbl_isempty = vim.tbl_isempty
 local conditional_func = nvim.conditional_func
 local is_available = nvim.is_available
+local user_plugin_opts = nvim.user_plugin_opts
 
 nvim.lsp.formatting = { format_on_save = { enabled = true }, disabled = {} }
 if type(nvim.lsp.formatting.format_on_save) == "boolean" then
@@ -196,11 +197,12 @@ nvim.lsp.flags = {}
 -- @return the table of LSP options used when setting up the given language server
 function nvim.lsp.server_settings(server_name)
     local server = require("lspconfig")[server_name]
-    local opts = {
-        -- get default server-settings
+
+    local opts = user_plugin_opts("server-settings." .. server_name, {
+        -- get server-settings
         capabilities = vim.tbl_deep_extend("force", nvim.lsp.capabilities, server.capabilities or {}),
         flags = vim.tbl_deep_extend("force", nvim.lsp.flags, server.flags or {}),
-    }
+    }, true, "configs")
 
     local old_on_attach = server.on_attach
     local user_on_attach = opts.on_attach

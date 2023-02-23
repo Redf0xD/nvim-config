@@ -19,7 +19,6 @@ nvim.install = nvim_installation or { home = stdpath "config" }
 nvim.install.config = stdpath("config"):gsub("nvim$", "nvim")
 vim.opt.rtp:append(nvim.install.config)
 local supported_configs = { nvim.install.home, nvim.install.config }
-
 --- Looks to see if a module path references a lua file in a configuration folder and tries to load it. If there is an error loading the file, write an error and continue
 -- @param module the module path to try and load
 -- @return the loaded module if successful or nil
@@ -131,6 +130,19 @@ function nvim.trim_or_nil(str) return type(str) == "string" and vim.trim(str) or
 function nvim.pad_string(str, padding)
   padding = padding or {}
   return str and str ~= "" and string.rep(" ", padding.left or 0) .. str .. string.rep(" ", padding.right or 0) or ""
+end
+
+function nvim.user_plugin_opts(module, default, extend, prefix)
+  -- default to extend = true
+  if extend == nil then extend = true end
+  -- if no default table is provided set it to an empty table
+  default = default or {}
+  -- try to load a module file if it exists
+  local user_settings = load_module_file((prefix or "user") .. "." .. module)
+  -- if a user override was found call the configuration engine
+  if user_settings ~= nil then default = func_or_extend(user_settings, default, extend) end
+  -- return the final configuration table with any overrides applied
+  return default
 end
 
 --- Initialize icons used throughout the user interface
