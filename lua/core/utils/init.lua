@@ -49,7 +49,6 @@ local function load_module_file(module)
 end
 
 --- user settings from the base `user/init.lua` file
-nvim.user_settings = load_module_file "user.init"
 --- default packer compilation location to be used in bootstrapping and packer setup call
 nvim.default_compile_path = stdpath "data" .. "/packer_compiled.lua"
 --- table of user created terminals
@@ -530,18 +529,18 @@ end
 --- Move the current buffer tab n places in the bufferline
 -- @param n numer of tabs to move the current buffer over by (positive = right, negative = left)
 function nvim.move_buf(n)
-  if n == 0 then return end -- if n = 0 then no shifts are needed
-  local bufs = vim.t.bufs -- make temp variable
-  for i, bufnr in ipairs(bufs) do -- loop to find current buffer
+  if n == 0 then return end                         -- if n = 0 then no shifts are needed
+  local bufs = vim.t.bufs                           -- make temp variable
+  for i, bufnr in ipairs(bufs) do                   -- loop to find current buffer
     if bufnr == vim.api.nvim_get_current_buf() then -- found index of current buffer
-      for _ = 0, (n % #bufs) - 1 do -- calculate number of right shifts
-        local new_i = i + 1 -- get next i
-        if i == #bufs then -- if at end, cycle to beginning
-          new_i = 1 -- next i is actually 1 if at the end
-          local val = bufs[i] -- save value
-          table.remove(bufs, i) -- remove from end
-          table.insert(bufs, new_i, val) -- insert at beginning
-        else -- if not at the end,then just do an in place swap
+      for _ = 0, (n % #bufs) - 1 do                 -- calculate number of right shifts
+        local new_i = i + 1                         -- get next i
+        if i == #bufs then                          -- if at end, cycle to beginning
+          new_i = 1                                 -- next i is actually 1 if at the end
+          local val = bufs[i]                       -- save value
+          table.remove(bufs, i)                     -- remove from end
+          table.insert(bufs, new_i, val)            -- insert at beginning
+        else                                        -- if not at the end,then just do an in place swap
           bufs[i], bufs[new_i] = bufs[new_i], bufs[i]
         end
         i = new_i -- iterate i to next value
@@ -549,7 +548,7 @@ function nvim.move_buf(n)
       break
     end
   end
-  vim.t.bufs = bufs -- set buffers
+  vim.t.bufs = bufs       -- set buffers
   vim.cmd.redrawtabline() -- redraw tabline
 end
 
@@ -571,7 +570,7 @@ function nvim.close_buf(bufnr, force)
   if force == nil then force = false end
   local current = vim.api.nvim_get_current_buf()
   if not bufnr or bufnr == 0 then bufnr = current end
-  if bufnr == current then nvim.nav_buf( -1) end
+  if bufnr == current then nvim.nav_buf(-1) end
 
   if nvim.is_available "bufdelete.nvim" then
     require("bufdelete").bufdelete(bufnr, force)
@@ -590,5 +589,6 @@ end
 
 require "core.utils.ui"
 require "core.utils.lsp"
+-- require "core.utils.status"
 
 return nvim

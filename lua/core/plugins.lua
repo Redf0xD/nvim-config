@@ -89,6 +89,7 @@ local plugins = {
   },
   -- Statusline
   ["nvim-lualine/lualine.nvim"] = { event = "VimEnter", config = function() require "configs.lualine" end },
+  -- ["rebelot/heirline.nvim"] = { event = "VimEnter", config = function() require "configs.heirline" end },
   -- Syntax highlighting
   ["nvim-treesitter/nvim-treesitter"] = {
     module = "nvim-treesitter",
@@ -277,16 +278,16 @@ local plugins = {
   },
   -- HOP
   ['phaazon/hop.nvim'] = {
-    module = 'hop',
+    branch = 'v2',
     config = function()
-      require 'configs.hop'
-    end,
+      require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    end
   },
   -- Undo
   ['mbbill/undotree'] = {},
   -- Theme
-  ["astronvim/astrotheme"] = { as = 'astrotheme', config = function()
-    require 'colors.astrotheme'
+  ["rebelot/kanagawa.nvim"] = { as = 'kanagawa', config = function()
+    require 'colors.kanagawa'
   end }
 }
 

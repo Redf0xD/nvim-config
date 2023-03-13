@@ -80,7 +80,7 @@ else -- TODO v3: remove this else block
   end
 
   -- HOP
-  maps.n["<leader>h"] = { ":HopWord<CR>", desc = "HopWord" }
+  maps.n["<leader>f."] = { ":HopWord<CR>", desc = "HopWord" }
 
   -- Navigate buffers
   if is_available "bufferline.nvim" then
@@ -100,8 +100,8 @@ maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- Comment
 if is_available "Comment.nvim" then
-  maps.n["<leader>/"] = { function() require("Comment.api").toggle.linewise.current() end, desc = "Comment line" }
-  maps.v["<leader>/"] = {
+  maps.n["<leader>."] = { function() require("Comment.api").toggle.linewise.current() end, desc = "Comment line" }
+  maps.v["<leader>."] = {
     "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
     desc = "Toggle comment line",
   }

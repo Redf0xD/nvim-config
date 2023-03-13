@@ -36,10 +36,10 @@ nvim.lsp.on_attach = function(client, bufnr)
     local capabilities = client.server_capabilities
     local lsp_mappings = {
         n = {
-            ["<leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
-            ["[d"] = { function() vim.diagnostic.goto_prev() end, desc = "Previous diagnostic" },
-            ["]d"] = { function() vim.diagnostic.goto_next() end, desc = "Next diagnostic" },
-            ["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
+                ["<leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
+                ["[d"] = { function() vim.diagnostic.goto_prev() end, desc = "Previous diagnostic" },
+                ["]d"] = { function() vim.diagnostic.goto_next() end, desc = "Next diagnostic" },
+                ["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
         },
         v = {},
     }

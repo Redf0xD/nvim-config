@@ -1,7 +1,7 @@
 local is_available = nvim.is_available
 local mappings = {
   n = {
-    ["<leader>"] = {
+        ["<leader>"] = {
       f = { name = "File" },
       p = { name = "Packages" },
       l = { name = "LSP" },
@@ -50,5 +50,7 @@ if is_available "Comment.nvim" then
     mappings[mode].g.b = "Comment toggle blockwise"
   end
 end
+
+if is_available "hop" then init_table("n", "<leader>", ".") end
 
 nvim.which_key_register(mappings)
