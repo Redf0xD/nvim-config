@@ -24,13 +24,13 @@ nvim.lsp.diagnostics = {
     update_in_insert = false,
   },
   on = {
-    virtual_text = true,
+    virtual_text = false,
     signs = { active = signs },
     update_in_insert = true,
     underline = true,
     severity_sort = true,
     float = {
-      focused = false,
+      focused = true,
       style = "minimal",
       border = "rounded",
       source = "always",
