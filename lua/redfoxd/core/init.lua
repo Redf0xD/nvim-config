@@ -1,0 +1,1 @@
+require('redfoxd.core.settings')

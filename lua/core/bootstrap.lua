@@ -1,1 +1,0 @@
-nvim.initialize_packer()
