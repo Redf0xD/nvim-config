@@ -1,1 +1,4 @@
-require("redfoxd.core")
+require "options"
+require "keymappings"
+require "Lazy"
+require "autocommands"
