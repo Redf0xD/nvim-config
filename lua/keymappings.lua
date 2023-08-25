@@ -59,14 +59,15 @@ local defaults = {
     ["[q"] = ":cprev<CR>",
     ["<C-q>"] = ":call QuickFixToggle()<CR>",
 
-    -- Toggle explorer
-    ["<leader>e"] = ":NvimTreeToggle<CR>",
+    ["<Leader>e"] = {":NvimTreeToggle<CR>", { desc = "Toggle Explorer" }},
 
-    -- Save
-    ["<leader>w"] = ":w<CR>",
+    ["<Leader>w"] = {":w!<CR>", { desc = "Save" }},
 
-    -- Quit
-    ["<leader>q"] = ":q<CR>",
+    ["<Leader>q"] = {":q<CR>", { desc = "Quit" }},
+
+    ["<Leader>n"] = {"<cmd>enew<cr>", { desc = "New file" }},
+
+    ["<Leader>;"] = {"<cmd>Alpha<CR>", { desc = "Dashboard" }},
 
   },
 
