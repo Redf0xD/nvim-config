@@ -6,17 +6,17 @@ local M = {
 }
 
 function M.config()
-  local get_icon = require('utils.icons').get_icon
+  local icons = require('utils.icons')
   require("neo-tree").setup({
     auto_clean_after_session_restore = true, -- Automatically clean up broken neo-tree buffers saved in sessions
     -- source_selector provides clickable tabs to switch between sources.
     source_selector = {
       winbar = true, -- toggle to show selector on winbar
       sources = {
-          { source = "filesystem", display_name = get_icon("FolderClosed", 1) .. "File" },
-          { source = "buffers", display_name = get_icon("DefaultFile", 1) .. "Bufs" },
-          { source = "git_status", display_name = get_icon("Git", 1) .. "Git" },
-          { source = "diagnostics", display_name = get_icon("Diagnostic", 1) .. "Diagnostic" },
+          { source = "filesystem", display_name = icons.ui.Folder .. " File" },
+          { source = "buffers", display_name = icons.ui.File .. " Bufs" },
+          { source = "git_status", display_name = icons.git.Octoface .. " Git" },
+          { source = "diagnostics", display_name = icons.ui.Diagnostic .. " Diagnostic" },
         },
       content_layout = "center",
     },
@@ -29,24 +29,24 @@ function M.config()
     default_component_configs = {
       indent = { padding = 0 },
       icon = {
-        folder_closed = get_icon "FolderClosed",
-        folder_open = get_icon "FolderOpen",
-        folder_empty = get_icon "FolderEmpty",
-        folder_empty_open = get_icon "FolderEmpty",
-        default = get_icon "DefaultFile",
+        folder_closed = icons.ui.Folder,
+        folder_open = icons.ui.FolderOpen,
+        folder_empty = icons.ui.EmptyFolder,
+        folder_empty_open = icons.ui.EmptyFolderOpen,
+        default = icons.ui.File,
       },
-      modified = { symbol = get_icon "FileModified" },
+      modified = { symbol = icons.ui.Circle },
       git_status = {
         symbols = {
-          added = get_icon "GitAdd",
-          deleted = get_icon "GitDelete",
-          modified = get_icon "GitChange",
-          renamed = get_icon "GitRenamed",
-          untracked = get_icon "GitUntracked",
-          ignored = get_icon "GitIgnored",
-          unstaged = get_icon "GitUnstaged",
-          staged = get_icon "GitStaged",
-          conflict = get_icon "GitConflict",
+          added = icons.git.LineAdded,
+          deleted = icons.git.FileDeleted,
+          modified = icons.git.Diff,
+          renamed = icons.git.FileRenamed,
+          untracked = icons.git.FileUntracked,
+          ignored = icons.git.FileIgnored,
+          unstaged = icons.git.FileUnstaged,
+          staged = icons.git.FileStaged,
+          conflict = icons.git.Branch,
         },
       },
     },
@@ -86,7 +86,7 @@ function M.config()
       find_in_dir = function(state)
           local node = state.tree:get_node()
           local path = node:get_id()
-          require("telescope.builtin").find_files {
+          require("telescope.builtin").live_grep {
             cwd = node.type == "directory" and path or vim.fn.fnamemodify(path, ":h"),
           }
       end,
@@ -100,6 +100,15 @@ function M.config()
         ["F"] = "find_in_dir",
         ["<S-tab>"] = "prev_source",
         ["<tab>"] = "next_source",
+        ["o"] = 'open',
+        ["oc"] = false,
+        ["od"] = false,
+        ["og"] = false,
+        ["om"] = false,
+        ["on"] = false,
+        ["os"] = false,
+        ["ot"] = false,
+
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<C-j>"] = "move_cursor_down",

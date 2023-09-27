@@ -1,22 +1,20 @@
 -- Define Mapleader
 vim.g.mapleader = " "
 local icons = require('utils.icons')
-local get_icon = icons.get_icon
 local utils = require('utils')
 local maps = utils.empty_map_table()
 local terminal = require('utils.terminal')
 
 local sections = {
-  s = { desc = get_icon("Search", 1) .. "Search" },
-  p = { desc = get_icon("Package", 1) .. "Packages" },
-  l = { desc = get_icon("ActiveLSP", 1) .. "LSP" },
-  u = { desc = get_icon("Window", 1) .. "UI/UX" },
-  b = { desc = get_icon("Tab", 1) .. "Buffers" },
-  bs = { desc = get_icon("Sort", 1) .. "Sort Buffers" },
-  d = { desc = get_icon("Debugger", 1) .. "Debugger" },
-  g = { desc = get_icon("Git", 1) .. "Git" },
-  S = { desc = get_icon("Session", 1) .. "Session" },
-  t = { desc = get_icon("Terminal", 1) .. "Terminal" },
+  s = { desc = icons.ui.Search .. " Search" },
+  p = { desc = icons.ui.Package .. " Packages" },
+  l = { desc = icons.ui.Code .. " LSP" },
+  u = { desc = icons.ui.Window .. " UI/UX" },
+  b = { desc = icons.ui.Tab .. " Buffers" },
+  bs = { desc = icons.ui.Sort .. " Sort Buffers" },
+  d = { desc = icons.ui.DebugConsole .. " Debugger" },
+  g = { desc = icons.git.Octoface .. " Git" },
+  t = { desc = icons.ui.Terminal .. " Terminal" },
 }
 
 -- navigation

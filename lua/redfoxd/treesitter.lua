@@ -23,7 +23,7 @@ function M.config()
 
     highlight = {
       enable = true,       -- false will disable the whole extension
-      disable = { "css" }, -- list of language that will be disabled
+      disable = { "" }, -- list of language that will be disabled
     },
     autopairs = {
       enable = true,

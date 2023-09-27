@@ -26,7 +26,7 @@ function M.config()
       formatting.black.with { extra_args = { "--fast" } },
       formatting.stylua,
       formatting.google_java_format,
-      diagnostics.flake8,
+      -- diagnostics.flake8,
     },
   }
 end

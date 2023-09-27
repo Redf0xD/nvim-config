@@ -6,50 +6,62 @@ if vim.fn.has "nvim-0.9" == 1 then
 end
 local options = {
   opt = {
-    titlestring = "%<%F%=%l/%L - nvim", -- what the title of the window will be set to
     breakindent = true, -- wrap indent to match  line start
-    clipboard = "unnamedplus", -- connection to the system clipboard
-    cmdheight = 0, -- hide command line unless needed
-    completeopt = { "menu", "menuone", "noselect" }, -- Options for insert mode completion
+    backup = false, -- creates a backup file
+    clipboard = "unnamedplus", -- allows neovim to access the system clipboard
+    cmdheight = 1, -- more space in the neovim command line for displaying messages
+    completeopt = { "menu", "menuone", "noselect" },
     copyindent = true, -- copy the previous indentation on autoindenting
-    cursorline = true, -- highlight the text line of the cursor
-    expandtab = true, -- enable the use of space in tab
-    fileencoding = "utf-8", -- file content encoding for the buffer
+    conceallevel = 0, -- so that `` is visible in markdown files
+    fileencoding = "utf-8", -- the encoding written to a file
+    foldmethod = "manual", -- folding, set to "expr" for treesitter based folding
+    foldexpr = "", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
     fillchars = { eob = " " }, -- disable `~` on nonexistent lines
     foldenable = true, -- enable fold for nvim-ufo
     foldlevel = 99, -- set high foldlevel for nvim-ufo
     foldlevelstart = 99, -- start with all code unfolded
     foldcolumn = vim.fn.has "nvim-0.9" == 1 and "1" or nil, -- show foldcolumn in nvim 0.9
-    history = 100, -- number of commands to remember in a history table
-    ignorecase = true, -- case insensitive searching
-    infercase = true, -- infer cases in keyword completion
-    laststatus = 3, -- global statusline
-    linebreak = true, -- wrap lines at 'breakat'
-    mouse = "a", -- enable mouse support
-    number = true, -- show numberline
-    preserveindent = true, -- preserve indent structure as much as possible
-    pumheight = 10, -- height of the pop up menu
-    relativenumber = true, -- show relative numberline
-    shiftwidth = 2, -- number of space inserted for indentation
-    showmode = false, -- disable showing modes in command line
-    showtabline = 2, -- always display tabline
-    signcolumn = "yes", -- always show the sign column
-    smartcase = true, -- case sensitive searching
-    splitbelow = true, -- splitting a new window below the current one
-    splitright = true, -- splitting a new window at the right of the current one
-    tabstop = 2, -- number of space in a tab
-    termguicolors = true, -- enable 24-bit RGB color in the TUI
-    timeoutlen = 500, -- shorten key timeout length a little bit for which-key
+    hidden = true, -- required to keep multiple buffers and open multiple buffers
+    hlsearch = true, -- highlight all matches on previous search pattern
+    ignorecase = true, -- ignore case in search patterns
+    mouse = "a", -- allow the mouse to be used in neovim
+    pumheight = 10, -- pop up menu height
+    showmode = false, -- we don't need to see things like -- INSERT -- anymore
+    smartcase = true, -- smart case
+    splitbelow = true, -- force all horizontal splits to go below current window
+    splitright = true, -- force all vertical splits to go to the right of current window
+    swapfile = false, -- creates a swapfile
+    termguicolors = true, -- set term gui colors (most terminals support this)
+    timeoutlen = 500, -- time to wait for a mapped sequence to complete (in milliseconds)
+    title = true, -- set the title of window to the value of the titlestring
+    titlestring = "%<%F%=%l/%L - nvim", -- what the title of the window will be set to
     undofile = true, -- enable persistent undo
-    updatetime = 300, -- length of time to wait before triggering the plugin
+    updatetime = 100, -- faster completion
+    writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+    expandtab = true, -- convert tabs to spaces
+    shiftwidth = 2, -- the number of spaces inserted for each indentation
+    tabstop = 2, -- insert 2 spaces for a tab
+    cursorline = true, -- highlight the current line
+    number = true, -- set numbered lines
+    relativenumber = true, -- show relative numberline
+    numberwidth = 4, -- set number column width to 2 {default 4}
+    signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
+    wrap = false, -- display lines as one long line
+    scrolloff = 8, -- minimal number of screen lines to keep above and below the cursor.
+    sidescrolloff = 8, -- minimal number of screen lines to keep left and right of the cursor.
+    showcmd = false,
     virtualedit = "block", -- allow going past end of line in visual block mode
-    wrap = false, -- disable wrapping of lines longer than the width of window
-    writebackup = false, -- disable making a backup before overwriting a file
+    ruler = false,
+    laststatus = 3,
+    history = 100, -- number of commands to remember in a history table
+    infercase = true, -- infer cases in keyword completion
+    linebreak = true, -- wrap lines at 'breakat'
+    preserveindent = true, -- preserve indent structure as much as possible
+    showtabline = 2, -- always display tabline
   },
   g = {
     mapleader = " ", -- set leader key
     maplocalleader = ",", -- set default local leader key
-    -- AstroNvim specific global options
     max_file = { size = 1024 * 100, lines = 10000 }, -- set global limits for large files
     autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
     autopairs_enabled = true, -- enable autopairs at start
@@ -57,11 +69,10 @@ local options = {
     codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
     diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
     highlighturl_enabled = true, -- highlight URLs by default
-    icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available)
     inlay_hints_enabled = false, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
     lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signature help)
     semantic_tokens_enabled = true, -- enable or disable LSP semantic tokens on startup
-    ui_notifications_enabled = true, -- disable notifications (TODO: rename to  notifications_enabled in AstroNvim v4)
+    notifications_enabled = true, -- disable notifications  
     git_worktrees = nil, -- enable git integration for detached worktrees (specify a table where each entry is of the form { toplevel = vim.env.HOME, gitdir=vim.env.HOME .. "/.dotfiles" })
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab

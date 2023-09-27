@@ -21,12 +21,14 @@ local mode_adapters = {
   operator_pending_mode = "o",
 }
 
+local uv = vim.loop
+local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
 
 --- Trigger an user event
----@param event string The event name to be appended to Astro
+---@param event string The event name to be appended to nvim
 ---@param delay? boolean Whether or not to delay the event asynchronously (Default: true)
 function M.event(event, delay)
-  local emit_event = function() vim.api.nvim_exec_autocmds("User", { pattern = "Astro" .. event, modeline = false }) end
+  local emit_event = function() vim.api.nvim_exec_autocmds("User", { pattern = "Nvim" .. event, modeline = false }) end
   if delay == false then
     emit_event()
   else
@@ -110,6 +112,13 @@ end
 function M.set_url_match()
   M.delete_url_match()
   if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", M.url_matcher, 15) end
+end
+
+---Join path segments that were passed as input
+---@return string
+function M.join_paths(...)
+  local result = table.concat({ ... }, path_sep)
+  return result
 end
 
 return M

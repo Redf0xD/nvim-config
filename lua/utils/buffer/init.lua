@@ -1,13 +1,3 @@
---- ### AstroNvim Buffer Utilities
---
--- Buffer management related utility functions
---
--- This module can be loaded with `local buffer_utils = require "astronvim.utils.buffer"`
---
--- @module astronvim.utils.buffer
--- @copyright 2022
--- @license GNU General Public License v3.0
-
 local M = {}
 
 local utils = require "utils"
@@ -194,8 +184,8 @@ function M.close_right(force)
 end
 
 --- Sort a the buffers in the current tab based on some comparator
----@param compare_func string|function a string of a comparator defined in require("astronvim.utils.buffer").comparator or a custom comparator function
----@param skip_autocmd boolean|nil whether or not to skip triggering AstroBufsUpdated autocmd event
+---@param compare_func string|function a string of a comparator defined in require("utils.buffer").comparator or a custom comparator function
+---@param skip_autocmd boolean|nil whether or not to skip triggering Nvim autocmd event
 ---@return boolean # Whether or not the buffers were sorted
 function M.sort(compare_func, skip_autocmd)
   if type(compare_func) == "string" then compare_func = M.comparator[compare_func] end
@@ -225,7 +215,7 @@ M.comparator = {}
 local fnamemodify = vim.fn.fnamemodify
 local function bufinfo(bufnr) return vim.fn.getbufinfo(bufnr)[1] end
 local function unique_path(bufnr)
-  return require("astronvim.utils.status.provider").unique_path() { bufnr = bufnr }
+  return require("utils.status.provider").unique_path() { bufnr = bufnr }
     .. fnamemodify(bufinfo(bufnr).name, ":t")
 end
 
