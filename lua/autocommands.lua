@@ -13,15 +13,15 @@ vim.on_key(function(char)
   end
 end, namespace "auto_hlsearch")
 
-autocmd("BufReadPre", {
-  desc = "Disable certain functionality on very large files",
-  group = augroup("large_buf", { clear = true }),
-  callback = function(args)
-    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
-    vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.max_file.size)
-      or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
-  end,
-})
+-- autocmd("BufReadPre", {
+--   desc = "Disable certain functionality on very large files",
+--   group = augroup("large_buf", { clear = true }),
+--   callback = function(args)
+--     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+--     vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.max_file.size)
+--       or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
+--   end,
+-- })
 
 local bufferline_group = augroup("bufferline", { clear = true })
 autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
@@ -239,6 +239,17 @@ autocmd("TermClose", {
         local module = "neo-tree.sources." .. source
         if package.loaded[module] then manager.refresh(require(module).name) end
       end
+    end
+  end,
+})
+
+autocmd("WinScrolled", {
+  desc = "Refresh indent blankline on window scroll",
+  group = augroup("indent_blankline_refresh_scroll", { clear = true }),
+  callback = function()
+    -- TODO: remove neovim version check when dropping support for Neovim 0.8
+    if vim.fn.has "nvim-0.9" ~= 1 or (vim.v.event.all and vim.v.event.all.leftcol ~= 0) then
+      pcall(vim.cmd.IndentBlanklineRefresh)
     end
   end,
 })

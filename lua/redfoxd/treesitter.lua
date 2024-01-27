@@ -1,40 +1,129 @@
 local M = {
   "nvim-treesitter/nvim-treesitter",
-  event = "BufReadPost",
+  event = { "BufReadPost", "BufNewFile" },
+  build = ":TSUpdate",
   dependencies = {
     {
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      "nvim-treesitter/nvim-treesitter-textobjects",
       event = "VeryLazy",
     },
     {
-      "nvim-tree/nvim-web-devicons",
+      "windwp/nvim-ts-autotag",
       event = "VeryLazy",
+    },
+    {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
     },
   },
 }
 function M.config()
-  local treesitter = require "nvim-treesitter"
-  local configs = require "nvim-treesitter.configs"
-
-  configs.setup {
-    -- ensure_installed = "all", -- one of "all" or a list of languages
-    ignore_install = { "" },                                                       -- List of parsers to ignore installing
-    sync_install = false,                                                          -- install languages synchronously (only applied to `ensure_installed`)
-
+  require("nvim-treesitter.configs").setup {
+    ensure_installed = { "lua", "markdown", "markdown_inline", "bash", "python" }, -- put the language you want in this array
+    ignore_install = { "" },
+    sync_install = false,
     highlight = {
-      enable = true,       -- false will disable the whole extension
-      disable = { "" }, -- list of language that will be disabled
-    },
-    autopairs = {
       enable = true,
+      -- disable = { "markdown" },
+      additional_vim_regex_highlighting = false,
     },
-    indent = { enable = true, disable = { "python", "css" } },
 
-    context_commentstring = {
+    indent = { enable = true },
+
+    matchup = {
+      enable = { "astro" },
+      disable = { "lua" },
+    },
+
+    autotag = {
       enable = true,
-      enable_autocmd = false,
+      filetypes = {
+        "html",
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "vue",
+        "tsx",
+        "jsx",
+        "rescript",
+        "xml",
+        "php",
+        "markdown",
+        "astro",
+        "glimmer",
+        "handlebars",
+        "hbs",
+      },
+    },
+
+    -- context_commentstring = {
+    --   enable = true,
+    --   enable_autocmd = false,
+    -- },
+
+    autopairs = { enable = true },
+
+    textobjects = {
+      select = {
+        enable = true,
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["at"] = "@class.outer",
+          ["it"] = "@class.inner",
+          ["ac"] = "@call.outer",
+          ["ic"] = "@call.inner",
+          ["aa"] = "@parameter.outer",
+          ["ia"] = "@parameter.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+          ["ai"] = "@conditional.outer",
+          ["ii"] = "@conditional.inner",
+          ["a/"] = "@comment.outer",
+          ["i/"] = "@comment.inner",
+          ["ab"] = "@block.outer",
+          ["ib"] = "@block.inner",
+          ["as"] = "@statement.outer",
+          ["is"] = "@scopename.inner",
+          ["aA"] = "@attribute.outer",
+          ["iA"] = "@attribute.inner",
+          ["aF"] = "@frame.outer",
+          ["iF"] = "@frame.inner",
+        },
+      },
     },
   }
+
+  -- local configs = require "nvim-treesitter.configs"
+  --
+  -- configs.setup {
+  --   -- modules = {
+  --   --
+  --   --
+  --   --   rainbow = {
+  --   --     enable = false,
+  --   --     query = {
+  --   --       "rainbow-parens",
+  --   --     },
+  --   --     strategy = require("ts-rainbow").strategy.global,
+  --   --     hlgroups = {
+  --   --       -- "TSRainbowRed",
+  --   --       "TSRainbowBlue",
+  --   --       -- "TSRainbowOrange",
+  --   --       -- "TSRainbowCoral",
+  --   --       "TSRainbowPink",
+  --   --       "TSRainbowYellow",
+  --   --       -- "TSRainbowViolet",
+  --   --       -- "TSRainbowGreen",
+  --   --     },
+  --   --   },
+  --   -- },
+  -- }
 end
 
 return M

@@ -234,6 +234,7 @@ if vim.fn.executable "lazygit" == 1 then
 end
 if vim.fn.executable "lazydocker" == 1 then
   maps.normal_mode["<leader>td"] = { function() terminal.toggle_term_cmd "lazydocker" end, desc = "ToggleTerm lazydocker" }
+  maps.term_mode["<leader>td"] = maps.normal_mode["<leader>td"]
 end
 if vim.fn.executable "node" == 1 then
   maps.normal_mode["<leader>tn"] = { function() terminal.toggle_term_cmd "node" end, desc = "ToggleTerm node" }
