@@ -3,13 +3,20 @@ local M = {
   lazy = false,
   event = { "BufReadPre" },
   dependencies = {
-    {
-      "hrsh7th/cmp-nvim-lsp",
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
+      { "folke/neodev.nvim", opts = {} },
+      "mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      {
+        "b0o/SchemaStore.nvim",
+        lazy = true,
+        version = false, -- last release is way too old
+      },
     },
-  },
 }
 
 function M.config()
+  require('neoconf').setup({})
   local cmp_nvim_lsp = require "cmp_nvim_lsp"
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()

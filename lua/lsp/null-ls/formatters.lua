@@ -1,6 +1,5 @@
 local M = {}
 
-
 local null_ls = require "null-ls"
 local services = require "lsp.null-ls.services"
 local method = null_ls.methods.FORMATTING

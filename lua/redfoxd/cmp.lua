@@ -3,40 +3,36 @@ local M = {
   dependencies = {
     {
       "hrsh7th/cmp-nvim-lsp",
-      event = "InsertEnter",
-    },
-    {
       "hrsh7th/cmp-emoji",
-      event = "InsertEnter",
-    },
-    {
       "hrsh7th/cmp-buffer",
-      event = "InsertEnter",
-    },
-    {
       "hrsh7th/cmp-path",
-      event = "InsertEnter",
-    },
-    {
       "hrsh7th/cmp-cmdline",
-      event = "InsertEnter",
-    },
-    {
-      "saadparwaiz1/cmp_luasnip",
-      event = "InsertEnter",
+      "hrsh7th/cmp-nvim-lua",
+      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
     {
       "L3MON4D3/LuaSnip",
-      event = "InsertEnter",
+      build = (not jit.os:find("Windows"))
+        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+      or nil,
       dependencies = {
-        "rafamadriz/friendly-snippets",
+        {
+          "rafamadriz/friendly-snippets",
+          config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+          end,
+        },
+        {
+          "nvim-cmp",
+          dependencies = {
+            "saadparwaiz1/cmp_luasnip",
+          },
+        },
       },
-    },
-    {
-      "hrsh7th/cmp-nvim-lua",
-    },
-    {
-      "roobert/tailwindcss-colorizer-cmp.nvim",
+      opts = {
+        history = true,
+        delete_check_events = "TextChanged",
+      },
     },
   },
   event = "InsertEnter",
@@ -54,7 +50,7 @@ function M.config()
 
   local cmp = require "cmp"
   local luasnip = require "luasnip"
-  require("luasnip/loaders/from_vscode").lazy_load()
+  require("luasnip.loaders.from_vscode").lazy_load()
   require("luasnip").filetype_extend("typescriptreact", { "html" })
 
   local check_backspace = function()
@@ -67,7 +63,7 @@ function M.config()
   cmp.setup {
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body) -- For `luasnip` users.
+        luasnip.lsp_expand(args.body)
       end,
     },
     mapping = cmp.mapping.preset.insert {

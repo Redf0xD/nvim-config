@@ -76,12 +76,12 @@ local settings = {
       download_url_template = "https://github.com/%s/releases/download/%s/%s",
     },
 
+    ensure_installed = require("utils").servers,
   }
 
 function M.config()
   require("mason").setup(settings)
   require("mason-lspconfig").setup {
-    ensure_installed = require("utils").servers,
     automatic_installation = true,
   }
 end

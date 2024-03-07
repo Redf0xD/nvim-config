@@ -1,129 +1,117 @@
 local M = {
-  "nvim-treesitter/nvim-treesitter",
-  event = { "BufReadPost", "BufNewFile" },
-  build = ":TSUpdate",
-  dependencies = {
-    {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      event = "VeryLazy",
-    },
-    {
-      "windwp/nvim-ts-autotag",
-      event = "VeryLazy",
-    },
-    {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-    },
-  },
-}
-function M.config()
-  require("nvim-treesitter.configs").setup {
-    ensure_installed = { "lua", "markdown", "markdown_inline", "bash", "python" }, -- put the language you want in this array
-    ignore_install = { "" },
-    sync_install = false,
-    highlight = {
-      enable = true,
-      -- disable = { "markdown" },
-      additional_vim_regex_highlighting = false,
-    },
-
-    indent = { enable = true },
-
-    matchup = {
-      enable = { "astro" },
-      disable = { "lua" },
-    },
-
-    autotag = {
-      enable = true,
-      filetypes = {
-        "html",
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-        "svelte",
-        "vue",
-        "tsx",
-        "jsx",
-        "rescript",
-        "xml",
-        "php",
-        "markdown",
-        "astro",
-        "glimmer",
-        "handlebars",
-        "hbs",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    version = false, -- last release is way too old and doesn't work on Windows
+    build = ":TSUpdate",
+    event = {"BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+    init = function(plugin)
+      require("lazy.core.loader").add_to_rtp(plugin)
+      require("nvim-treesitter.query_predicates")
+    end,
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+          -- When in diff mode, we want to use the default
+          -- vim text objects c & C instead of the treesitter ones.
+          local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
+          local configs = require("nvim-treesitter.configs")
+          for name, fn in pairs(move) do
+            if name:find("goto") == 1 then
+              move[name] = function(q, ...)
+                if vim.wo.diff then
+                  local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
+                  for key, query in pairs(config or {}) do
+                    if q == query and key:find("[%]%[][cC]") then
+                      vim.cmd("normal! " .. key)
+                      return
+                    end
+                  end
+                end
+                return fn(q, ...)
+              end
+            end
+          end
+        end,
       },
     },
-
-    -- context_commentstring = {
-    --   enable = true,
-    --   enable_autocmd = false,
-    -- },
-
-    autopairs = { enable = true },
-
-    textobjects = {
-      select = {
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    keys = {
+      { "<c-space>", desc = "Increment selection" },
+      { "<bs>", desc = "Decrement selection", mode = "x" },
+    },
+    ---@type TSConfig
+    ---@diagnostic disable-next-line: missing-fields
+    opts = {
+      highlight = { enable = true },
+      indent = { enable = true },
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "jsdoc",
+        "json",
+        "jsonc",
+        "lua",
+        "luadoc",
+        "luap",
+        "query",
+        "regex",
+        "toml",
+        "tsx",
+        "vim",
+        "vimdoc",
+      },
+      incremental_selection = {
         enable = true,
-        -- Automatically jump forward to textobj, similar to targets.vim
-        lookahead = true,
         keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["at"] = "@class.outer",
-          ["it"] = "@class.inner",
-          ["ac"] = "@call.outer",
-          ["ic"] = "@call.inner",
-          ["aa"] = "@parameter.outer",
-          ["ia"] = "@parameter.inner",
-          ["al"] = "@loop.outer",
-          ["il"] = "@loop.inner",
-          ["ai"] = "@conditional.outer",
-          ["ii"] = "@conditional.inner",
-          ["a/"] = "@comment.outer",
-          ["i/"] = "@comment.inner",
-          ["ab"] = "@block.outer",
-          ["ib"] = "@block.inner",
-          ["as"] = "@statement.outer",
-          ["is"] = "@scopename.inner",
-          ["aA"] = "@attribute.outer",
-          ["iA"] = "@attribute.inner",
-          ["aF"] = "@frame.outer",
-          ["iF"] = "@frame.inner",
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
+        },
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
         },
       },
     },
-  }
+    ---@param opts TSConfig
+    config = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        ---@type table<string, boolean>
+        local added = {}
+        opts.ensure_installed = vim.tbl_filter(function(lang)
+          if added[lang] then
+            return false
+          end
+          added[lang] = true
+          return true
+        end, opts.ensure_installed)
+      end
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
 
-  -- local configs = require "nvim-treesitter.configs"
-  --
-  -- configs.setup {
-  --   -- modules = {
-  --   --
-  --   --
-  --   --   rainbow = {
-  --   --     enable = false,
-  --   --     query = {
-  --   --       "rainbow-parens",
-  --   --     },
-  --   --     strategy = require("ts-rainbow").strategy.global,
-  --   --     hlgroups = {
-  --   --       -- "TSRainbowRed",
-  --   --       "TSRainbowBlue",
-  --   --       -- "TSRainbowOrange",
-  --   --       -- "TSRainbowCoral",
-  --   --       "TSRainbowPink",
-  --   --       "TSRainbowYellow",
-  --   --       -- "TSRainbowViolet",
-  --   --       -- "TSRainbowGreen",
-  --   --     },
-  --   --   },
-  --   -- },
-  -- }
-end
+  -- Show context of the current function
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    enabled = true,
+    opts = { mode = "cursor", max_lines = 3 },
+  },
 
+  -- Automatically add closing tags for HTML and JSX
+  {
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {},
+  },
+}
 return M

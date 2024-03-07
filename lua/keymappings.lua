@@ -4,6 +4,7 @@ local icons = require('utils.icons')
 local utils = require('utils')
 local maps = utils.empty_map_table()
 local terminal = require('utils.terminal')
+local kitty = require('utils.kitty')
 
 local sections = {
   s = { desc = icons.ui.Search .. " Search" },
@@ -100,16 +101,6 @@ maps.normal_mode["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Upda
 maps.normal_mode["<tab>"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.normal_mode["<S-tab>"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
--- Comment
-maps.normal_mode["<leader>/"] = {
-function() require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1) end,
-desc = "Toggle comment line",
-}
-maps.visual_mode["<leader>/"] = {
-  "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-  desc = "Toggle comment for selection",
-}
-  
 -- Manage Buffers
 maps.normal_mode["<leader>c"] = { function() require("utils.buffer").close() end, desc = "Close buffer" }
 maps.normal_mode["<leader>C"] = { function() require("utils.buffer").close(0, true) end, desc = "Force close buffer" }
@@ -160,10 +151,18 @@ maps.normal_mode["<leader>gu"] = { function() require("gitsigns").undo_stage_hun
 maps.normal_mode["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View Git diff" }
 
 -- Smart Splits
-maps.normal_mode["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
-maps.normal_mode["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
-maps.normal_mode["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
-maps.normal_mode["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
+if vim.env.KITTY_WINDOW_ID then
+  maps.normal_mode["<C-h>"] = { function() kitty.navigateLeft() end, desc = "Move to left split" }
+  maps.normal_mode["<C-j>"] = { function() kitty.navigateDown() end, desc = "Move to below split" }
+  maps.normal_mode["<C-k>"] = { function() kitty.navigateUp() end, desc = "Move to above split" }
+  maps.normal_mode["<C-l>"] = { function() kitty.navigateRight() end, desc = "Move to right split" }
+else
+  maps.normal_mode["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
+  maps.normal_mode["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
+  maps.normal_mode["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
+  maps.normal_mode["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
+end
+
 maps.normal_mode["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
 maps.normal_mode["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
 maps.normal_mode["<C-Left>"] = { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
@@ -297,6 +296,7 @@ maps.normal_mode["<leader>dp"] = { function() require("dap").pause() end, desc =
 maps.normal_mode["<leader>dr"] = { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
 maps.normal_mode["<leader>dR"] = { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
 maps.normal_mode["<leader>ds"] = { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
+maps.normal_mode["<leader>da"] = { function() require("dap").set_exception_breakpoints() end, desc = "Set Exception Breakpoint" }
 
 maps.normal_mode["<leader>de"] = {
   function()

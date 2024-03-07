@@ -1,10 +1,29 @@
-local augroup = vim.api.nvim_create_augroup
+local function augroup(name)
+  return vim.api.nvim_create_augroup(name, { clear = true })
+end
 local autocmd = vim.api.nvim_create_autocmd
 local cmd = vim.api.nvim_create_user_command
 local namespace = vim.api.nvim_create_namespace
 
 local utils = require "utils"
 local userevent = utils.event
+
+cmd("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
+  end
+  require("conform").format({ async = true, lsp_fallback = true, range = range })
+end, { range = true })
+
+cmd("Getcwd", function()
+  print(vim.fn.getcwd())
+  end, { range = true })
+
 
 vim.on_key(function(char)
   if vim.fn.mode() == "n" then
@@ -13,17 +32,27 @@ vim.on_key(function(char)
   end
 end, namespace "auto_hlsearch")
 
--- autocmd("BufReadPre", {
---   desc = "Disable certain functionality on very large files",
---   group = augroup("large_buf", { clear = true }),
---   callback = function(args)
---     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
---     vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.max_file.size)
---       or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
---   end,
--- })
+-- Check if we need to reload the file when it changed
+autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = augroup("checktime"),
+  callback = function()
+    if vim.o.buftype ~= 'nofile' then
+      vim.cmd('checktime')
+    end
+  end
+})
 
-local bufferline_group = augroup("bufferline", { clear = true })
+autocmd("BufReadPre", {
+  desc = "Disable certain functionality on very large files",
+  group = augroup("large_buf"),
+  callback = function(args)
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+    vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.max_file.size)
+      or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
+  end,
+})
+
+local bufferline_group = augroup("bufferline")
 autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   desc = "Update buffers when adding new buffers",
   group = bufferline_group,
@@ -70,11 +99,11 @@ autocmd({ "BufDelete", "TermClose" }, {
 
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
-  group = augroup("highlighturl", { clear = true }),
+  group = augroup("highlighturl"),
   callback = function() utils.set_url_match() end,
 })
 
-local view_group = augroup("auto_view", { clear = true })
+local view_group = augroup("auto_view")
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
   group = view_group,
@@ -100,7 +129,7 @@ autocmd("BufWinEnter", {
 
 autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
-  group = augroup("q_close_windows", { clear = true }),
+  group = augroup("q_close_windows"),
   callback = function(args)
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
     if vim.tbl_contains({ "help", "nofile", "quickfix" }, buftype) and vim.fn.maparg("q", "n") == "" then
@@ -116,21 +145,21 @@ autocmd("BufWinEnter", {
 
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
-  group = augroup("highlightyank", { clear = true }),
+  group = augroup("highlightyank"),
   pattern = "*",
   callback = function() vim.highlight.on_yank() end,
 })
 
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
-  group = augroup("unlist_quickfist", { clear = true }),
+  group = augroup("unlist_quickfist"),
   pattern = "qf",
   callback = function() vim.opt_local.buflisted = false end,
 })
 
 autocmd("BufEnter", {
   desc = "Quit Nvim if more than one window is open and only sidebar windows are list",
-  group = augroup("auto_quit", { clear = true }),
+  group = augroup("auto_quit"),
   callback = function()
     local wins = vim.api.nvim_tabpage_list_wins(0)
     -- Both neo-tree and aerial will auto-quit if there is only a single window left
@@ -160,7 +189,7 @@ autocmd("BufEnter", {
 
 autocmd({ "User", "BufWinEnter" }, {
   desc = "Disable status, tablines, and cmdheight for alpha",
-  group = augroup("alpha_settings", { clear = true }),
+  group = augroup("alpha_settings"),
   callback = function(args)
     if
       (
@@ -187,7 +216,7 @@ autocmd({ "User", "BufWinEnter" }, {
 })
 autocmd("VimEnter", {
   desc = "Start Alpha when vim is opened with no arguments",
-  group = augroup("alpha_autostart", { clear = true }),
+  group = augroup("alpha_autostart"),
   callback = function()
     local should_skip
     local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
@@ -215,7 +244,7 @@ autocmd("VimEnter", {
 
 autocmd("BufEnter", {
   desc = "Open Neo-Tree on startup with directory",
-  group = augroup("neotree_start", { clear = true }),
+  group = augroup("neotree_start"),
   callback = function()
     if package.loaded["neo-tree"] then
       vim.api.nvim_del_augroup_by_name "neotree_start"
@@ -231,7 +260,7 @@ autocmd("BufEnter", {
 autocmd("TermClose", {
   pattern = "*lazygit*",
   desc = "Refresh Neo-Tree when closing lazygit",
-  group = augroup("neotree_refresh", { clear = true }),
+  group = augroup("neotree_refresh"),
   callback = function()
     local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
     if manager_avail then
@@ -245,7 +274,7 @@ autocmd("TermClose", {
 
 autocmd("WinScrolled", {
   desc = "Refresh indent blankline on window scroll",
-  group = augroup("indent_blankline_refresh_scroll", { clear = true }),
+  group = augroup("indent_blankline_refresh_scroll"),
   callback = function()
     -- TODO: remove neovim version check when dropping support for Neovim 0.8
     if vim.fn.has "nvim-0.9" ~= 1 or (vim.v.event.all and vim.v.event.all.leftcol ~= 0) then

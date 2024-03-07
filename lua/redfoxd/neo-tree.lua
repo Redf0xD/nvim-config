@@ -6,20 +6,10 @@ local M = {
 }
 
 function M.config()
-  local icons = require('utils.icons')
   require("neo-tree").setup({
-    auto_clean_after_session_restore = true, -- Automatically clean up broken neo-tree buffers saved in sessions
-    -- source_selector provides clickable tabs to switch between sources.
-    source_selector = {
-      winbar = true, -- toggle to show selector on winbar
-      sources = {
-          { source = "filesystem", display_name = icons.ui.Folder .. " File" },
-          { source = "buffers", display_name = icons.ui.File .. " Bufs" },
-          { source = "git_status", display_name = icons.git.Octoface .. " Git" },
-          { source = "diagnostics", display_name = icons.ui.Diagnostic .. " Diagnostic" },
-        },
-      content_layout = "center",
-    },
+    auto_clean_after_session_restore = true,
+    sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+    open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
     event_handlers = {
       {
         event = "neo_tree_buffer_enter",
@@ -27,27 +17,11 @@ function M.config()
       },
     },
     default_component_configs = {
-      indent = { padding = 0 },
-      icon = {
-        folder_closed = icons.ui.Folder,
-        folder_open = icons.ui.FolderOpen,
-        folder_empty = icons.ui.EmptyFolder,
-        folder_empty_open = icons.ui.EmptyFolderOpen,
-        default = icons.ui.File,
-      },
-      modified = { symbol = icons.ui.Circle },
-      git_status = {
-        symbols = {
-          added = icons.git.LineAdded,
-          deleted = icons.git.FileDeleted,
-          modified = icons.git.Diff,
-          renamed = icons.git.FileRenamed,
-          untracked = icons.git.FileUntracked,
-          ignored = icons.git.FileIgnored,
-          unstaged = icons.git.FileUnstaged,
-          staged = icons.git.FileStaged,
-          conflict = icons.git.Branch,
-        },
+      indent = {
+        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+        expander_collapsed = "",
+        expander_expanded = "",
+        expander_highlight = "NeoTreeExpander",
       },
     },
     -- see `:h neo-tree-custom-commands-global`
@@ -93,13 +67,11 @@ function M.config()
     }, -- A list of functions
     window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
       -- possible options. These can also be functions that return these options.
-      width = 30, -- applies to left and right positions
+
       mappings = {
         ["<space>"] = false,
         ["Y"] = "copy_selector",
         ["F"] = "find_in_dir",
-        ["<S-tab>"] = "prev_source",
-        ["<tab>"] = "next_source",
         ["o"] = 'open',
         ["oc"] = false,
         ["od"] = false,
@@ -108,7 +80,6 @@ function M.config()
         ["on"] = false,
         ["os"] = false,
         ["ot"] = false,
-
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
         ["<C-j>"] = "move_cursor_down",
@@ -116,11 +87,14 @@ function M.config()
       },
     },
     filesystem = {
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+        hide_gitignored = true,
+      },
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every time
-        --               -- the current file is changed while the tree is open.
       },
-      hijack_netrw_behavior = "open_current", -- "open_current",-- netrw disabled, opening a directory opens within the
       use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
       -- instead of relying on nvim autocmd events.
     },
