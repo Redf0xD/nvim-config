@@ -32,7 +32,7 @@ local options = {
     splitright = true, -- force all vertical splits to go to the right of current window
     swapfile = false, -- creates a swapfile
     termguicolors = true, -- set term gui colors (most terminals support this)
-    timeoutlen = 500, -- time to wait for a mapped sequence to complete (in milliseconds)
+    timeoutlen = 300, -- time to wait for a mapped sequence to complete (in milliseconds)
     title = true, -- set the title of window to the value of the titlestring
     titlestring = "%<%F%=%l/%L - nvim", -- what the title of the window will be set to
     undofile = true, -- enable persistent undo
@@ -47,7 +47,7 @@ local options = {
     numberwidth = 4, -- set number column width to 2 {default 4}
     signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
     wrap = false, -- display lines as one long line
-    scrolloff = 8, -- minimal number of screen lines to keep above and below the cursor.
+    scrolloff = 10, -- minimal number of screen lines to keep above and below the cursor.
     sidescrolloff = 8, -- minimal number of screen lines to keep left and right of the cursor.
     showcmd = false,
     virtualedit = "block", -- allow going past end of line in visual block mode
@@ -58,6 +58,9 @@ local options = {
     linebreak = true, -- wrap lines at 'breakat'
     preserveindent = true, -- preserve indent structure as much as possible
     showtabline = 2, -- always display tabline
+    list = true,
+    listchars = { tab = '» ', trail = '·', nbsp = '␣' },
+    inccommand = 'split',
   },
   g = {
     mapleader = " ", -- set leader key
@@ -74,6 +77,7 @@ local options = {
     semantic_tokens_enabled = true, -- enable or disable LSP semantic tokens on startup
     notifications_enabled = true, -- disable notifications  
     git_worktrees = nil, -- enable git integration for detached worktrees (specify a table where each entry is of the form { toplevel = vim.env.HOME, gitdir=vim.env.HOME .. "/.dotfiles" })
+    have_nerd_font = true,
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab
 }
