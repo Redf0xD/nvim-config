@@ -3,21 +3,15 @@ local M = {
   lazy = false,
   event = { "BufReadPre" },
   dependencies = {
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-      { "folke/neodev.nvim", opts = {} },
-      "mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      {
-        "b0o/SchemaStore.nvim",
-        lazy = true,
-        version = false, -- last release is way too old
-      },
-    },
+    require("redfoxd.lsp.neoconf"),
+    require("redfoxd.lsp.lazydev"),
+    require("redfoxd.lsp.mason"),
+    require("redfoxd.lsp.schemastore"),
+  },
 }
 
 function M.config()
-  require('neoconf').setup({})
-  local cmp_nvim_lsp = require "cmp_nvim_lsp"
+  local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -38,7 +32,7 @@ function M.config()
     keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
   end
 
-  local lspconfig = require "lspconfig"
+  local lspconfig = require("lspconfig")
   local on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
     require("illuminate").on_attach(client)
