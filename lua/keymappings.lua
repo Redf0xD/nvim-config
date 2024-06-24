@@ -27,19 +27,19 @@ maps.insert_mode["<A-Right>"] = "<C-\\><C-N><C-w>l"
 -- Move current line / block with Alt-j/k ala vscode.
 maps.insert_mode["<A-j>"] = "<Esc>:m .+1<CR>==gi"
 maps.insert_mode["<A-k>"] = "<Esc>:m .-2<CR>==gi"
-maps.normal_mode["<A-j>"] = ":m .+1<CR>=="
-maps.normal_mode["<A-k>"] = ":m .-2<CR>=="
+maps.normal_mode["<A-j>"] = "<cmd>m .+1<CR>=="
+maps.normal_mode["<A-k>"] = "<cmd>m .-2<CR>=="
 
 -- QuickFix
-maps.normal_mode["]q"] = ":cnext<CR>"
-maps.normal_mode["[q"] = ":cprev<CR>"
-maps.normal_mode["<C-q>"] = ":call QuickFixToggle()<CR>"
+maps.normal_mode["]q"] = "<cmd>cnext<CR>"
+maps.normal_mode["[q"] = "<cmd>cprev<CR>"
+maps.normal_mode["<C-q>"] = "<cmd>call QuickFixToggle()<CR>"
 
 maps.normal_mode["<Leader>w"] = {":w!<CR>",  desc = "Save" }
 maps.normal_mode["<Leader>q"] = {":q<CR>",  desc = "Quit" }
 maps.normal_mode["<Leader>n"] = {"<cmd>enew<cr>",  desc = "New file" }
 maps.normal_mode["tt"] = {":t.<CR>",  desc = "New file" }
-maps.normal_mode['<Esc>'] = ':noh<CR>'
+maps.normal_mode['<Esc>'] = '<cmd>noh<CR>'
 
 -- Terminal window navigation
 maps.term_mode["<C-h>"] = "<C-\\><C-N><C-w>h"
@@ -52,8 +52,8 @@ maps.visual_mode["<"] = "<gv"
 maps.visual_mode[">"] = ">gv"
 
 -- Move current line / block with Alt-j/k ala vscode.
-maps.visual_block_mode["<A-j>"] = ":m '>+1<CR>gv-gv"
-maps.visual_block_mode["<A-k>"] = ":m '<-2<CR>gv-gv"
+maps.visual_block_mode["<A-j>"] = "<cmd>m '>+1<CR>gv-gv"
+maps.visual_block_mode["<A-k>"] = "<cmd>m '<-2<CR>gv-gv"
 
 -- navigate tab completion with <c-j> and <c-k>
 -- runs conditionally
@@ -309,5 +309,8 @@ maps.normal_mode["<leader>de"] = {
 maps.visual_mode["<leader>de"] = { function() require("dapui").eval() end, desc = "Evaluate Input (F2)" }
 maps.normal_mode["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
 maps.normal_mode["<leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+
+-- Dropbar
+maps.normal_mode["<leader>ls"] = { function() require("dap.ui.widgets").hover() end, desc = "LSP symbols" }
 
 utils.set_keymaps(maps)
