@@ -3,12 +3,19 @@ local M = {
   dependencies = {
     {
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lua",
       "roobert/tailwindcss-colorizer-cmp.nvim",
+      {
+        "supermaven-inc/supermaven-nvim",
+        build = ":SupermavenUseFree",
+        opts = {
+          disable_keymaps = true,
+          disable_inline_completion = true,
+        },
+      },
     },
     {
       "L3MON4D3/LuaSnip",
@@ -50,6 +57,7 @@ function M.config()
 
   local cmp = require "cmp"
   local luasnip = require "luasnip"
+  local suggestion = require('supermaven-nvim.completion_preview')
   require("luasnip.loaders.from_vscode").lazy_load()
   require("luasnip").filetype_extend("typescriptreact", { "html" })
 
@@ -67,8 +75,6 @@ function M.config()
       end,
     },
     mapping = cmp.mapping.preset.insert {
-      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
       ["<C-h>"] = function()
         if cmp.visible_docs() then
           cmp.close_docs()
@@ -93,6 +99,8 @@ function M.config()
           luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif suggestion.has_suggestion() then
+          suggestion.on_accept_suggestion()
         elseif check_backspace() then
           fallback()
         else
@@ -214,9 +222,9 @@ function M.config()
           -- return vim_item
         end
 
-        if entry.source.name == "copilot" then
+        if entry.source.name == "supermaven" then
           vim_item.kind = icons.git.Octoface
-          vim_item.kind_hl_group = "CmpItemKindCopilot"
+          vim_item.kind_hl_group = "CmpItemKindSupermaven"
         end
 
         if entry.source.name == "cmp_tabnine" then
@@ -234,16 +242,11 @@ function M.config()
           vim_item.kind_hl_group = "CmpItemKindConstant"
         end
 
-        if entry.source.name == "emoji" then
-          vim_item.kind = icons.misc.Smiley
-          vim_item.kind_hl_group = "CmpItemKindEmoji"
-        end
-
         return vim_item
       end,
     },
     sources = {
-      { name = "copilot" },
+      { name = "supermaven" },
       {
         name = "nvim_lsp",
         entry_filter = function(entry, ctx)
@@ -269,7 +272,6 @@ function M.config()
       { name = "buffer" },
       { name = "path" },
       { name = "calc" },
-      { name = "emoji" },
       { name = "treesitter" },
       { name = "crates" },
       { name = "tmux" },
@@ -308,11 +310,11 @@ function M.config()
   }
 
   pcall(function()
-    -- local function on_confirm_done(...)
-    --   require("nvim-autopairs.completion.cmp").on_confirm_done()(...)
-    -- end
-    -- require("cmp").event:off("confirm_done", on_confirm_done)
-    -- require("cmp").event:on("confirm_done", on_confirm_done)
+    local function on_confirm_done(...)
+      require("nvim-autopairs.completion.cmp").on_confirm_done()(...)
+    end
+    require("cmp").event:off("confirm_done", on_confirm_done)
+    require("cmp").event:on("confirm_done", on_confirm_done)
   end)
 end
 

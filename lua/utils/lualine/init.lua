@@ -92,7 +92,7 @@ return {
   },
   lsp = {
     function()
-      local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+      local buf_clients = vim.lsp.get_clients { bufnr = 0 }
       if #buf_clients == 0 then
         return "LSP Inactive"
       end
@@ -145,7 +145,7 @@ return {
 
   spaces = {
     function()
-      local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
+      local shiftwidth = vim.api.get_clients(0, "shiftwidth")
       return icons_utils.ui.Tab .. " " .. shiftwidth
     end,
     padding = 1,

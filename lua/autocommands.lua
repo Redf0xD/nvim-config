@@ -8,23 +8,6 @@ local namespace = vim.api.nvim_create_namespace
 local utils = require "utils"
 local userevent = utils.event
 
-cmd("Format", function(args)
-  local range = nil
-  if args.count ~= -1 then
-    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-    range = {
-      start = { args.line1, 0 },
-      ["end"] = { args.line2, end_line:len() },
-    }
-  end
-  require("conform").format({ async = true, lsp_fallback = true, range = range })
-end, { range = true })
-
-cmd("Getcwd", function()
-  print(vim.fn.getcwd())
-  end, { range = true })
-
-
 vim.on_key(function(char)
   if vim.fn.mode() == "n" then
     local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
@@ -111,6 +94,7 @@ autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
     if vim.b[args.buf].view_activated then vim.cmd.mkview { mods = { emsg_silent = true } } end
   end,
 })
+
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
   group = view_group,
@@ -249,24 +233,10 @@ autocmd("BufEnter", {
     if package.loaded["neo-tree"] then
       vim.api.nvim_del_augroup_by_name "neotree_start"
     else
-      local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
+      local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(0))
       if stats and stats.type == "directory" then
         vim.api.nvim_del_augroup_by_name "neotree_start"
         require "neo-tree"
-      end
-    end
-  end,
-})
-autocmd("TermClose", {
-  pattern = "*lazygit*",
-  desc = "Refresh Neo-Tree when closing lazygit",
-  group = augroup("neotree_refresh"),
-  callback = function()
-    local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
-    if manager_avail then
-      for _, source in ipairs { "filesystem", "git_status", "document_symbols" } do
-        local module = "neo-tree.sources." .. source
-        if package.loaded[module] then manager.refresh(require(module).name) end
       end
     end
   end,
@@ -276,9 +246,20 @@ autocmd("WinScrolled", {
   desc = "Refresh indent blankline on window scroll",
   group = augroup("indent_blankline_refresh_scroll"),
   callback = function()
-    -- TODO: remove neovim version check when dropping support for Neovim 0.8
-    if vim.fn.has "nvim-0.9" ~= 1 or (vim.v.event.all and vim.v.event.all.leftcol ~= 0) then
+    if vim.v.event.all and vim.v.event.all.leftcol ~= 0 then
       pcall(vim.cmd.IndentBlanklineRefresh)
     end
   end,
 })
+
+autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
+  desc = "Automatically load the launch.json configuration for the DAP (Debug Adapter Protocol) on startup",
+  group = augroup("startup_command"),
+  callback = function()
+    local status, plugin = pcall(require, "dap.ext.vscode")
+    if status then
+      plugin.load_launchjs()
+    end
+  end,
+})
+

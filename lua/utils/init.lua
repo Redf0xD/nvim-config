@@ -1,4 +1,5 @@
 local M = {}
+local uv = vim.uv
 
 M.servers = {
   "lua_ls",
@@ -21,7 +22,6 @@ local mode_adapters = {
   operator_pending_mode = "o",
 }
 
-local uv = vim.loop
 local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
 
 --- Trigger an user event

@@ -100,13 +100,15 @@ local M = {
   },
 
   -- Show context of the current function
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    enabled = true,
-    opts = { mode = "cursor", max_lines = 3 },
+    {
+    'Bekaboo/dropbar.nvim',
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make'
+    },
+    opts = {},
   },
-
   -- Automatically add closing tags for HTML and JSX
   {
     "windwp/nvim-ts-autotag",

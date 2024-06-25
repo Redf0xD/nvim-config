@@ -4,6 +4,7 @@ local M = {
   dependencies = {
     {
       "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
       event = "VeryLazy",
     },
   },
@@ -11,8 +12,25 @@ local M = {
 
 function M.config()
   require("dapui").setup {
+    controls = {
+      element = "repl",
+      enabled = true,
+      icons = {
+        disconnect = "",
+        pause = "",
+        play = "",
+        run_last = "",
+        step_back = "",
+        step_into = "",
+        step_out = "",
+        step_over = "",
+        terminate = ""
+      }
+    },
+    element_mappings = {},
     expand_lines = true,
-    icons = { expanded = "", collapsed = "", circular = "" },
+    icons = { expanded = "", collapsed = "", current_frame = ""},
+    force_buffers = true,
     mappings = {
       -- Use a table to apply multiple mappings
       expand = { "<CR>", "<2-LeftMouse>" },
@@ -21,6 +39,10 @@ function M.config()
       edit = "e",
       repl = "r",
       toggle = "t",
+    },
+    render = {
+      indent = 1,
+      max_value_lines = 100
     },
     layouts = {
       {
@@ -52,7 +74,6 @@ function M.config()
     },
   }
 
-  vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
 end
 
 return M

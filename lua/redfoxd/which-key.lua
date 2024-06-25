@@ -6,7 +6,7 @@ local M = {
 function M.config()
   local which_key = require "which-key"
 
-  which_key.setup()
+  which_key.setup({})
   require('utils').which_key_register()
   
 end

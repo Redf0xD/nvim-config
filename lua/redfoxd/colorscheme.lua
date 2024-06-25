@@ -1,10 +1,10 @@
 local M = {
-  "catppuccin/nvim",
+  "rose-pine/neovim",
   lazy = false,    -- make sure we load this during startup if it is your main colorscheme
   priority = 1000, -- make sure to load this before all the other start plugins
 }
 
-M.name = "catppuccin"
+M.name = "rose-pine"
 function M.config()
   local status_ok, _ = pcall(vim.cmd.colorscheme, M.name)
   if not status_ok then
